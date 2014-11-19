@@ -11,7 +11,7 @@ function Queue() {
 	this.isEmpty = function() {
 		if (dataArr.length === 0) return true;
 		for (var i in dataArr) {
-			(dataArr[i] !== 'undefined' || dataArr[i]) ? return false : continue;
+			(dataArr[i] !== 'undefined' && dataArr[i]) ? return false : continue;
 		}
 		return true;
 	}
