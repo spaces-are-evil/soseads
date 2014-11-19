@@ -1,5 +1,6 @@
 /**
- * Queue Data Structure. FIFO (First in first out) structure.
+ * Queue Data Structure. FIFO (First in first out) data structure.
+ * @author Tony Robinson
  */
 function Queue() {
 	var dataArr = [];
