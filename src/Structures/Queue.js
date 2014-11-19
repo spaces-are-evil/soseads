@@ -70,7 +70,7 @@ function Queue() {
 }
 
 function CircularBuffer(size) {
-	var bufferQueue = new Queue(size);
-
+	if (!size) throw new RangeError("cannot instantiate ciruclar buffer with no size");
+	
 }
 
