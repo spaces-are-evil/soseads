@@ -1,34 +1,34 @@
 function startTest() {
-	/*
+	
 	var testQueue = new Queue();
 	testQueue.enqueue(1);
-	console.log(testQueue.toArray());
+	console.log(testQueue.toString());
 	testQueue.enqueue(2);
-	console.log(testQueue.toArray());
+	console.log(testQueue.toString());
 	testQueue.enqueue(3);
-	console.log(testQueue.toArray());
+	console.log(testQueue.toString());
 	testQueue.enqueue(4);
-	console.log(testQueue.toArray());
+	console.log(testQueue.toString());
 	testQueue.enqueue(5);
-	console.log(testQueue.toArray());
+	console.log(testQueue.toString());
 	testQueue.enqueue(6);
-	console.log(testQueue.toArray());
+	console.log(testQueue.toString());
 	testQueue.enqueue(7);
-	console.log(testQueue.toArray());
+	console.log(testQueue.toString());
 	console.log(testQueue.peek());
 	testQueue.dequeue();
 	testQueue.dequeue();
 	testQueue.dequeue();
-	console.log(testQueue.toArray());
+	console.log(testQueue.toString());
 	testQueue.enqueue(1);
-	console.log(testQueue.toArray());
+	console.log(testQueue.toString());
 	newQueue = new Queue();
 	newQueue.enqueue(1);
-	console.log(testQueue.toArray());
-	console.log(newQueue.toArray());
+	console.log(testQueue.toString());
+	console.log(newQueue.toString());
 	console.log(newQueue.dataArr);
-	*/	
-	
+		
+	/*
 	var bst = new BinarySearchTree();
 	bst.addNode(10);
 	bst.addNode(7);
@@ -61,5 +61,5 @@ function startTest() {
 	printTree.preOrderTraversal(bst2);
 	console.log("Is Degenerate? " + bst2.isDegenerate());
 	
-	
+	*/
 }

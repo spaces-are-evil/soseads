@@ -82,13 +82,12 @@ function BinarySearchTree() {
 	 * Finds a TreeNode that matches the value being searched for.
 	 * @param node the TreeNode to start the search from (usually the root node). 
 	 * @param data the value to search for.
-	 * @param found (Optional) used in recursive calls to check if a value has been found
 	 * @return the TreeNode that matches the search, -1 if no match is found.
 	 */
-	this.preOrderSearch = function(node, data, found) {
+	this.preOrderSearch = function(node, data) {
 		if (!searchSuccess) {	
 			//not a real node, step back
-			if (typeof node === 'undefined' || !node) return;
+			if (!node) return;
 			else {
 				//found node
 				var nodeData = node.getNodeData()
@@ -104,11 +103,11 @@ function BinarySearchTree() {
 			//Recursive steps
 			var children = node.getAllChildren();
 			//check if children don't exist, step back if so
-			if (typeof children === 'undefined' || !children) return;
+			if (!children) return;
 			else {
 				for (var i = 0; i < children.length; i++) {
 					//make sure children exist before recursively calling
-					if (typeof children[i] !== 'undefined' && children[i]) {
+					if (children[i]) {
 						var curNode = children[i];
 						this.preOrderSearch(curNode, data);
 					}

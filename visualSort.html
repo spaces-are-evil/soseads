@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8"/>
+		<link rel="stylesheet" type="text/css" href="main.css"/>
+		<!--<script src="http://ajax.googleapis.com/ajax/libs/threejs/r67/three.min.js"></script>-->
+		<script src="src/Structures/Queue.js"></script>
+		<script src="src/Algorithms/TreeTraverse.js"></script>
+		<script src="src/Structures/TreeNode.js"></script>
+		<script src="src/Structures/Trees.js"></script>
+
+		<script src="src/Structures/TestStructures.js"></script>
+		
+		<title>Visual Sorting Algorithms</title>
+	</head>
+	<body>
+		<div id="header">
+		</div>
+		<div id="navBar">
+			<ul>
+				<li>
+					<label for="sortingAlgorithm">Choose Algorithm</label>
+					<select id="sortingAlgorithm"> 
+						<optgroup label="Simple Sorts">
+							<option value="insertionsort" selected>Insertion Sort</option>
+							<option value="selectionsort">Selection Sort</option>
+						</optgroup>
+						<optgroup label="Efficient Sorts">
+							<option value="mergesort">Merge Sort</option>
+							<option value="heapsort">Heap Sort</option>
+							<option value="quicksort">Quick Sort</option>
+							<option value="quicksort">Quick Sort - 3 Way</option>
+						</optgroup>
+						<optgroup label="Inefficient Sorts">
+							<option value="bogosort">Bogo Sort</option>
+							<option value="stoogesort">Stooge Sort</option>
+						</optgroup>			
+						<optgroup label="Bubble Sort Variants">
+							<option value="bubblesort">Bubble Sort</option>
+							<option value="shellsort">Shell Sort</option>
+							<option value="combsort">Comb Sort</option>
+						</optgroup>
+						<optgroup label="Distribution Sorts">
+							<option value="countingsort">Counting Sort</option>
+							<option value="bucketsort">Bucket Sort</option>
+							<option value="radixsort">Radix Sort</option>
+						</optgroup>
+						<optgroup label="Specialized Sorts">
+							<option value="treesort">Tree Sort</option>
+						</optgroup>
+					</select>
+				</li>
+				<li>
+					<input type="button" value="Generate Random Array"/>
+				</li>
+					<input type="button" value="Generate Random Tree"/>
+				<li>
+				</li>
+				<li>
+					<input type="button" value="Start Test for Structures" onclick="startTest()"/>
+				</li>
+			</ul>
+		</div>
+		<!--<script src="animations.js"></script>-->
+		
+	</body>
+</html>
