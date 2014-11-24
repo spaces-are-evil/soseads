@@ -45,8 +45,9 @@ function TreeNode(data) {
 			nodeCount++;
 			if (countNode.children !== null) {
 				for (var i = 0; i < countNode.children.length; i++) {
-					if (typeof countNode.children[i] !== 'undefined' && countNode.children[i]) 
+					if (countNode.children[i]) {
 						countQueue.enqueue(countNode.children[i]);
+					}
 				}		
 			}
 		}
@@ -74,10 +75,12 @@ function TreeNode(data) {
 	* @param data The height of the current node.
 	*/
 	this.setHeight = function(data) {
-		if (!isNaN(data))
+		if (!isNaN(data)) {
 			height = data;
-		else
-			throw new RangeError('setHeight(): must be a valid integer');
+		}
+		else {
+			throw new RangeError('TreeNode.setHeight(): must be a valid integer');
+		}
 	};
 
 	/**
@@ -85,10 +88,12 @@ function TreeNode(data) {
 	 * @param object The data to set for the current node.
 	 */
 	this.setNodeData = function(data) {
-		if (!isNaN(data))
+		if (!isNaN(data)) {
 			nodeData = data;
-		else
-			throw new RangeError('setNodeData(): binary search trees only accept ')
+		}
+		else {
+			throw new RangeError('TreeNode.setNodeData(): binary search trees only accept alphanumerical characters');
+		}
 	};	
 		
 	/**
@@ -97,11 +102,15 @@ function TreeNode(data) {
 	 * @param node the node to set the nth child as.
 	 */
 	this.setNthChild = function(nth, node) {
-		if (!isNaN(nth)) throw new RangeError('setNthChild(): nth must be a whole number');
-		if (node instanceof TreeNode)
+		if (!isNaN(nth)) {
+			throw new RangeError('TreeNode.setNthChild(): nth must be a whole number');
+		}
+		if (node instanceof TreeNode) {
 			children[nth] = node;
-		else
-			throw new ReferenceError('setNthChild(): Node must be of type TreeNode');
+		}
+		else {
+			throw new ReferenceError('TreeNode.setNthChild(): Node must be of type TreeNode');
+		}
 	};
 				
 	/**
@@ -109,10 +118,12 @@ function TreeNode(data) {
 	 * @param node the node to set the parent as.
 	 */
 	this.setParent = function(node) {
-		if (node instanceof TreeNode)
+		if (node instanceof TreeNode) {
 			parent = node;
-		else 
-			throw new ReferenceError('setParent(): Node must be of type TreeNode');
+		}
+		else { 
+			throw new ReferenceError('TreeNode.setParent(): Node must be of type TreeNode');
+		}
 	};
 		
 	/**
@@ -125,12 +136,14 @@ function TreeNode(data) {
 		while (node.parent !== null) {
 			for (var i = 0; i < node.parent.children.length; i++) {
 				if (node.parent.children[i] && node.parent.children[i].nodeData === node.nodeData) {
-					if (i === 0) 
+					if (i === 0) {
 						//left subtree
 						node.parent.balanceFactor = parseInt(balanceFactor.replace("-","").trim()) + 1;
-					else if (i === 1) 
+					}
+					else if (i === 1) { 
 						//right subtree
 						node.parent.balanceFactor = parseInt("-" + (parseInt(balanceFactor.replace("-","").trim()) + 1));
+					}
 					node = node.parent.parent;
 					break;
 				}
@@ -143,7 +156,9 @@ function TreeNode(data) {
 	 * @return The height of the current node.
 	 */
 	this.getHeight = function() {
-		if (nodeHeight !== 0 && !nodeHeight) throw new ReferenceError('getHeight(): current node height not set.');
+		if (nodeHeight !== 0 && !nodeHeight) {
+			throw new ReferenceError('TreeNode.getHeight(): current node height not set.');
+		}
 		return nodeHeight;
 	};
 				
@@ -152,7 +167,9 @@ function TreeNode(data) {
 	 * @return The data of the current node.
 	 */
 	this.getNodeData = function() {
-		if (nodeData !== 0 && !nodeData) throw new ReferenceError('getNodeData(): current node data not set.');
+		if (nodeData !== 0 && !nodeData) {
+			throw new ReferenceError('TreeNode.getNodeData(): current node data not set.');
+		}
 		return nodeData;
 	};
 				
@@ -162,8 +179,12 @@ function TreeNode(data) {
 	 * @return The nth child of the current node.
 	 */
 	this.getNthChild = function(nth) {
-		if (!isNaN(nth)) throw new RangeError('getNthChild(): nth must be a whole number');
-		if (!children[nth]) throw new ReferenceError('getNthChild(): child' + nth + "does not exist for current node.");
+		if (!isNaN(nth)) {
+			throw new RangeError('TreeNode.getNthChild(): nth must be a whole number');
+		}
+		if (!children[nth]) {
+			throw new ReferenceError('TreeNode.getNthChild(): child' + nth + "does not exist for current node.");
+		}
 		return children[nth];
 	};
 				
@@ -175,13 +196,16 @@ function TreeNode(data) {
 		var len = children.length;
 		var childCount = 0;
 		for (var i = 0; i < len; i++) {
-			if (children[i]) 
+			if (children[i]) {
 				childCount++;
+			}
 		}
-		if (childCount > 0) 
+		if (childCount > 0) { 
 			return children;
-		else 
-			throw new ReferenceError('getAllChildren(): no children exist for current node');
+		}
+		else { 
+			throw new ReferenceError('TreeNode.getAllChildren(): no children exist for current node');
+		}
 	};
 				
 	/**
@@ -189,10 +213,12 @@ function TreeNode(data) {
 	 * @return the parent of a current node.
 	 */
 	this.getParent = function() {
-		if (parent !== null) 
+		if (parent !== null) {
 			return parent;
-		else 
-			throw new ReferenceError('getParent(): no parent exists for current node.')
+		}
+		else { 
+			throw new ReferenceError('TreeNode.getParent(): no parent exists for current node.');
+		}
 	};
 					
 	/**
@@ -202,8 +228,9 @@ function TreeNode(data) {
 	this.getNumberOfChildren = function() {
 		var retVal = 0;
 		for (var i = 0; i < children.length; i++) {
-			if (typeof children[i] !== 'undefined' && children[i]) 
+			if (children[i]) {
 				retVal++;
+			}
 		}
 		return retVal;
 	};
@@ -222,8 +249,12 @@ function TreeNode(data) {
 	 *
 	 */
 	this.getBalanceFactor = function() {
-		if (!balanceFactor) throw new ReferenceError('getBalanceFactor(): balance factor not set for current node.').
-		return balanceFactor;
+		if (!balanceFactor) {
+			throw new ReferenceError('TreeNode.getBalanceFactor(): balance factor not set for current node.');
+		} 
+		else { 
+			return balanceFactor;
+		}
 	};
 	
 	/**
@@ -232,10 +263,12 @@ function TreeNode(data) {
 	 */
 	this.removeNthChild = function(nth) {
 		var regExp = "[0-9]+";
-		if (regExp.test(data.toString))
+		if (regExp.test(data.toString)) {
 			children[nth] = null;
-		else
-			throw new RangeError("removeNthChild(): Cannot access a non-integer index.");
+		}
+		else {
+			throw new RangeError("TreeNode.removeNthChild(): Cannot access a non-integer index.");
+		}
 	};
 
 	/**

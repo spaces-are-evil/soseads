@@ -11,23 +11,26 @@ function Queue() {
 	 */
 	this.size = function() {
 		return dataArr.length;
-	}
+	};
 
 	/**
 	 * Checks if queue is empty.
 	 * @return True if queue is empty, false otherwise.
 	 */
 	this.isEmpty = function() {
-		if (dataArr.length === 0) 
+		if (dataArr.length === 0) {
 			return true;
+		}
 		for (var i in dataArr) {
-			if (dataArr[i]) 
+			if (dataArr[i]) {
 				return false;
-			else
+			}
+			else {
 				continue;
+			}
 		}
 		return true;
-	}
+	};
 	
 	/**
 	 * Clears the queue.
@@ -42,11 +45,12 @@ function Queue() {
 	 * @return true if the add was successful, false otherwise.
 	 */
 	this.enqueue = function(object) {
-		if(object)
+		if(object || object === 0) {
 			dataArr.push(object);
-		else
-			throw new ReferenceError("enqueue(): cannot enqueue a falsey object");
-		
+		}
+		else {
+			throw new ReferenceError("Queue.enqueue(): cannot enqueue a falsey object");
+		}
 	};
 
 	/**
@@ -56,10 +60,12 @@ function Queue() {
 	 * @throws {ReferenceError} if queue is empty.
 	 */
 	this.peek = function() {
-		if (dataArr.length === 0)
-			throw new ReferenceError("peek(): cannot peek an empty queue");
-		else
+		if (dataArr.length === 0) {
+			throw new ReferenceError("Queue.peek(): cannot peek an empty queue");
+		}
+		else {
 			return dataArr[0];
+		}
 	};
 
 	/**
@@ -69,10 +75,12 @@ function Queue() {
 	 * @throws {ReferenceError} if queue is empty.
 	 */
 	this.dequeue = function() {
-		if (dataArr.length === 0)
-			throw new ReferenceError("peek(): cannot dequeue an empty queue");
-		else
+		if (dataArr.length === 0) {
+			throw new ReferenceError("Queue.peek(): cannot dequeue an empty queue");
+		}
+		else {
 			return dataArr.splice(0,1)[0];
+		}
 	};
 	
 	/**
@@ -83,17 +91,18 @@ function Queue() {
 	this.toString = function() {
 		var retStr = "[";
 		for (var i = 0; i < dataArr.length; i++) {
-			if (i > 0) 
+			if (i > 0) {
 				retStr+= " ";
+			}
 			retStr += dataArr[i].toString();
-			if (i < dataArr.length - 1) 
+			if (i < dataArr.length - 1) {
 				retStr += ",";
+			}
 		}
 		retStr += "]";
 		return retStr;
 	};
 }
-
 
 /**
  * Circular Buffer Data Structure. A queue with a defined size
@@ -106,11 +115,13 @@ function CircularBuffer(size) {
 		bufEnd = 0, //end of the buffer (current newest element)
 		bufCount = 0, //number of elements in buffer
 		bufArr = [];
-	if (!size)
-		throw new RangeError("cannot instantiate ciruclar buffer with no size.");
-	else
-		(bufSize = size, bufArr = new Array(bufSize));
-
+	if (!size) {
+		throw new RangeError("CircularBuffer: cannot instantiate ciruclar buffer with no size.");
+	}
+	else {
+		bufSize = size;
+		bufArr = new Array(bufSize);
+	}
 
  	/**
  	 * Checks if the circular buffer is empty.
@@ -134,10 +145,12 @@ function CircularBuffer(size) {
  	 * @param object The object to write to the circular buffer.
  	 */
 	this.write = function(object) {
-		if (!bufArr[bufEnd] && bufCount < bufSize) 
+		if (!bufArr[bufEnd] && bufCount < bufSize) {
 			bufCount++;
-		if (bufArr[bufEnd]) 
-			console.log("BUFFER OVERRIDE: POSITION: " + bufEnd + " | OLD OBJECT: " + bufArr[bufEnd].toString() + " | NEW OBJECT: " + object.toString());
+		}
+		if (bufArr[bufEnd]) {
+			console.log("CIRCULAR BUFFER OVERRIDE: POSITION: " + bufEnd + " | OLD OBJECT: " + bufArr[bufEnd].toString() + " | NEW OBJECT: " + object.toString());
+		}
 		bufArr[bufEnd] = object; 
 		bufEnd = (bufEnd + 1) % bufSize;
 	};
@@ -148,8 +161,9 @@ function CircularBuffer(size) {
 	 * @return the oldest object in the circular buffer.
 	 */
 	this.read = function() {
-		if (!bufArr[bufStart]) 
-			throw new ReferenceError("read(): you cannot read from an empty circular buffer");
+		if (!bufArr[bufStart]) {
+			throw new ReferenceError("CircularBuffer.read(): you cannot read from an empty circular buffer");
+		}
 		var retVal = bufArr[bufStart];
 		bufArr[bufStart] = "";
 		bufStart = (bufStart + 1) % bufSize;
@@ -163,18 +177,19 @@ function CircularBuffer(size) {
 	 */
 	this.toString = function() {
 		var retStr = "[";
-		for (var i = 0; i < dataArr.length; i++) {
-			if (i > 0) 
+		for (var i = 0; i < bufArr.length; i++) {
+			if (i > 0) {
 				retStr+= " ";
-			retStr += dataArr[i].toString();
-			if (i < dataArr.length - 1) 
+			}
+			retStr += bufArr[i].toString();
+			if (i < bufArr.length - 1) {
 				retStr += ",";
+			}
 		}
 		retStr += "] - REMINDER: The last element points to the first element.";
 		return retStr;
 	};
 }
-
 
 function Deque() {
 		
