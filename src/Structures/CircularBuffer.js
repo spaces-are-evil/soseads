@@ -11,6 +11,7 @@
  * @param obj The variable or object to examine.
  * @return True if the variable or object is empty, false otherwise.
  */
+ /* istanbul ignore next */
 function isVarObjEmpty(obj) {
 	var propCount = 0,
 		validPropCount = 0;

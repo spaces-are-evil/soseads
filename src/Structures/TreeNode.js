@@ -2,32 +2,40 @@
 /**
  * Represents a node of a Binary Search Tree
  * Can be used to create BST, AVL Trees, Red-Black
- * Trees, Splay Tree, Treap and Tango trees. 
+ * Trees, Splay Tree, Treap, Tango and Huffman trees.
+ * NOTICE: Optional parameters cannot be skipped.
+ * If you want to pass height, all other parameters must be filled.
+ * @param data Data the node will house. Null if not set
+ * @param parent The node's parent. Null if not set
+ * @param left The node's left child. Null if not set
+ * @param right The node's right child. Null if not set
+ * @param height The node's height. Null if not set
  */
-function TreeNode(data) {
-	var nodeData = data;
-	var parent = null;
-	var children = [null, null];
-	var nodeHeight = null;
-	var subtreeHeight = null;
-	var balanceFactor = 0;
+function TreeNode(data, parent, left, right, height) {
+	var nodeData = data || null,
+	 	parent = parent || null,
+		leftChild = left || null,
+		rightChild = right || null,
+		nodeHeight = height || null,
+		subtreeHeight,
+		balanceFactor;
 	
 	/**
 	 * Readjusts the height value of children nodes when a change in structure takes place.
 	 */
 	this.changeChildrenHeight = function() {
-		var childQueue = new Queue();
-		var curNode;
+		var childQueue = new Queue(),
+			curNode;
 		childQueue.enqueue(this);
 		while (!childQueue.isEmpty()) {
 			curNode = childQueue.dequeue();
-			if (curNode.children !== null) {
-				for (var i = 0; i < curNode.children.length; i++) {
-					if (curNode.children[i]) {
-						curNode.children[i].nodeHeight = curNode.nodeHeight + 1;
-						childQueue.enqueue(curNode.children[i]);
-					}
-				}		
+			if (curNode.leftChild) {
+				curNode.leftChild.nodeHeight = curNode.nodeHeight + 1;
+				childQueue.enqueue(curNode.leftChild);
+			} 
+			if (curNode.rightChild) {
+				curNode.rightChild.nodeHeight = curNode.nodeHeight + 1;c
+				childQueue.enqueue(curNode.rightChild);
 			}
 		}
 	};
@@ -36,20 +44,19 @@ function TreeNode(data) {
 	 * Counts the number of nodes from the node calling the function.
 	 */
 	this.countChildNodes = function() {
-		var nodeCount = 0;
-		var countQueue = new Queue();
-		var countNode;
+		var nodeCount = 0,
+			countQueue = new Queue(),
+			curNode;
 		countQueue.enqueue(this);
 		while (!countQueue.isEmpty()) {
-			countNode = countQueue.dequeue();
+			curNode = countQueue.dequeue();
 			nodeCount++;
-			if (countNode.children !== null) {
-				for (var i = 0; i < countNode.children.length; i++) {
-					if (countNode.children[i]) {
-						countQueue.enqueue(countNode.children[i]);
-					}
-				}		
-			}
+			if (curNode.leftChild) {
+				childQueue.enqueue(curNode.leftChild);
+			} 
+			if (curNode.rightChild) {
+				childQueue.enqueue(curNode.rightChild);
+			}	
 		}
 		return nodeCount;
 	};
@@ -67,7 +74,7 @@ function TreeNode(data) {
 	* @return True if no children exist (leaf condition), false otherwise.
 	*/
 	this.isLeaf = function() {
-		return (children.length === 0) ? true : false;
+		return (leftChild && rightChild) ? true : false;
 	};
 			
 	/**
@@ -76,10 +83,10 @@ function TreeNode(data) {
 	*/
 	this.setHeight = function(data) {
 		if (!isNaN(data)) {
-			height = data;
+			nodeHeight = data;
 		}
 		else {
-			throw new RangeError('TreeNode.setHeight(): must be a valid integer');
+			throw new RangeError('TreeNode.setHeight(data): data must be a valid integer');
 		}
 	};
 
@@ -88,30 +95,38 @@ function TreeNode(data) {
 	 * @param object The data to set for the current node.
 	 */
 	this.setNodeData = function(data) {
-		if (!isNaN(data)) {
+		var regExp = "[0-9a-zA-Z]+";
+		if (regExp.test(data.toString())) {
 			nodeData = data;
 		}
 		else {
-			throw new RangeError('TreeNode.setNodeData(): binary search trees only accept alphanumerical characters');
+			throw new RangeError('TreeNode.setNodeData(data): binary search trees only accept alphanumerical characters');
 		}
 	};	
 		
 	/**
-	 * Sets the nth (0 inclusive) child of the current node. 
-	 * @param nth the child number (0 inclusive).
-	 * @param node the node to set the nth child as.
+	 * Sets the left child of the current node.
+	 * @param node The node that the left child will be.
 	 */
-	this.setNthChild = function(nth, node) {
-		if (!isNaN(nth)) {
-			throw new RangeError('TreeNode.setNthChild(): nth must be a whole number');
-		}
-		if (node instanceof TreeNode) {
-			children[nth] = node;
-		}
-		else {
-			throw new ReferenceError('TreeNode.setNthChild(): Node must be of type TreeNode');
-		}
-	};
+	 this.setLeftChild = function(node) {
+	 	if (node instanceof TreeNode) {
+	 		leftChild = node;
+	 	} else {
+	 		throw new ReferenceError("TreeNode.setLeftChild(node): node must be of type TreeNode.");
+	 	}
+	 }
+
+	/**
+	 * Sets the right child of the current node.
+	 * @param node The node that the left child will be.
+	 */
+	 this.setRightChild = function(node) {
+	 	if (node instanceof TreeNode) {
+	 		rightChild = node;
+	 	} else {
+	 		throw new ReferenceError("TreeNode.setRightChild(node): node must be of type TreeNode.");
+	 	}
+	 }
 				
 	/**
 	 * Sets the parent of the current node.
@@ -122,32 +137,34 @@ function TreeNode(data) {
 			parent = node;
 		}
 		else { 
-			throw new ReferenceError('TreeNode.setParent(): Node must be of type TreeNode');
+			throw new ReferenceError('TreeNode.setParent(node): node must be of type TreeNode');
 		}
 	};
 		
 	/**
-	 * Path retracing algorithm. Retraces path of node and calculates
-	 * balance factor as it goes. Works from most added leaf up to parent.
+	 * Path retracing algorithm. Retraces path of node from child to parent
+	 * and calculates balance factor as it goes.
 	 */
 	this.setBalanceFactor = function() {
-		balanceFactor = 0;
-		var node = this;
+		var node,
+			newBalanceFactor = 0;
+		try {
+			var node = this;
+		} catch (err) {};
+		
 		while (node.parent !== null) {
-			for (var i = 0; i < node.parent.children.length; i++) {
-				if (node.parent.children[i] && node.parent.children[i].nodeData === node.nodeData) {
-					if (i === 0) {
-						//left subtree
-						node.parent.balanceFactor = parseInt(balanceFactor.replace("-","").trim()) + 1;
-					}
-					else if (i === 1) { 
-						//right subtree
-						node.parent.balanceFactor = parseInt("-" + (parseInt(balanceFactor.replace("-","").trim()) + 1));
-					}
-					node = node.parent.parent;
-					break;
-				}
+			if (node.parent.leftChild && node.parent.leftChild.nodeData === node.nodeData) {
+				node.parent.balanceFactor = parseInt(balanceFactor.replace("-","").trim()) + 1;
 			}
+			if (node.parent.rightChild && node.parent.rightChild.nodeData === node.nodeData) {
+				node.parent.balanceFactor = parseInt("-" + (parseInt(balanceFactor.replace("-","").trim()) + 1));
+			}
+			try {
+				node = node.parent.parent;
+			} catch (err) {
+				break;
+			}
+			
 		}
 	};
 		
@@ -156,7 +173,7 @@ function TreeNode(data) {
 	 * @return The height of the current node.
 	 */
 	this.getHeight = function() {
-		if (nodeHeight !== 0 && !nodeHeight) {
+		if (nodeHeight !== 0 || !nodeHeight) {
 			throw new ReferenceError('TreeNode.getHeight(): current node height not set.');
 		}
 		return nodeHeight;
@@ -167,45 +184,32 @@ function TreeNode(data) {
 	 * @return The data of the current node.
 	 */
 	this.getNodeData = function() {
-		if (nodeData !== 0 && !nodeData) {
+		if (nodeData !== 0 || !nodeData) {
 			throw new ReferenceError('TreeNode.getNodeData(): current node data not set.');
 		}
 		return nodeData;
 	};
 				
 	/**
-	 * Gets the nth child (0 inclusive) of the current node.
-	 * @param nth the child number to get (0 inclusive).
-	 * @return The nth child of the current node.
+	 * Gets the left child  of the current node.
+	 * @return The left child of the current node.
 	 */
-	this.getNthChild = function(nth) {
-		if (!isNaN(nth)) {
-			throw new RangeError('TreeNode.getNthChild(): nth must be a whole number');
-		}
-		if (!children[nth]) {
+	this.getLeftChild = function() {
+		if (!leftChild) {
 			throw new ReferenceError('TreeNode.getNthChild(): child' + nth + "does not exist for current node.");
 		}
 		return children[nth];
 	};
-				
+
 	/**
-	 * Gets an array of all children for the current node.
-	 * @return An array of children for the current node.
+	 * Gets the right child  of the current node.
+	 * @return The right child of the current node.
 	 */
-	this.getAllChildren = function() {
-		var len = children.length;
-		var childCount = 0;
-		for (var i = 0; i < len; i++) {
-			if (children[i]) {
-				childCount++;
-			}
+	this.getLeftChild = function() {
+		if (!rightChild) {
+			throw new ReferenceError('TreeNode.getNthChild(): child' + nth + "does not exist for current node.");
 		}
-		if (childCount > 0) { 
-			return children;
-		}
-		else { 
-			throw new ReferenceError('TreeNode.getAllChildren(): no children exist for current node');
-		}
+		return children[nth];
 	};
 				
 	/**
@@ -213,86 +217,74 @@ function TreeNode(data) {
 	 * @return the parent of a current node.
 	 */
 	this.getParent = function() {
-		if (parent !== null) {
+		if (parent) {
 			return parent;
 		}
 		else { 
 			throw new ReferenceError('TreeNode.getParent(): no parent exists for current node.');
 		}
 	};
-					
-	/**
-	* Retrieve the number of children for the current node.
-	* @return The number of children.
-	*/
-	this.getNumberOfChildren = function() {
-		var retVal = 0;
-		for (var i = 0; i < children.length; i++) {
-			if (children[i]) {
-				retVal++;
-			}
-		}
-		return retVal;
-	};
 
-	/**
-	 * Retrieves the length of children array (n) of a n-ary tree. 
-	 * @return the length of the children array.
-	 */
-	this.getChildrenLength = function() {
-		return children.length;
-	};
-	
 	/**
 	 * Gets the balance factor for the current node;
 	 * @return the balance factor of the current node.
 	 *
 	 */
 	this.getBalanceFactor = function() {
-		if (!balanceFactor) {
-			throw new ReferenceError('TreeNode.getBalanceFactor(): balance factor not set for current node.');
+		if (balanceFactor || balanceFactor === 0) {
+			return balanceFactor;
 		} 
 		else { 
-			return balanceFactor;
+			throw new ReferenceError('TreeNode.getBalanceFactor(): balance factor not set for current node.');
 		}
 	};
 	
 	/**
-	 * Removes the nth child link for the current node.
-	 * @param nth the child number (0 inclusive).
+	 * Removes the left child and link for the current node.
 	 */
-	this.removeNthChild = function(nth) {
-		var regExp = "[0-9]+";
-		if (regExp.test(data.toString)) {
-			children[nth] = null;
+	this.deleteLeftChild = function() {
+		if (leftChild) {
+			leftChild = null;
 		}
 		else {
-			throw new RangeError("TreeNode.removeNthChild(): Cannot access a non-integer index.");
+			throw new RangeError("TreeNode.deleteLeftChild(): Cannot delete a non-existent child.");
 		}
 	};
 
 	/**
-	 * Removes all children links for the current node.
+	 * Removes the right child and link for the current node.
 	 */
-	this.removeAllChildren = function() {
-		children = [null, null];
-	};
+	this.deleteRightChild = function() {
+		if (rightChild) {
+			rightChild = null;
+		}
+		else {
+			throw new RangeError("TreeNode.deleteRightChild(): Cannot delete a non-existent child.");
+		}
+	}
 
 	/**
 	 * Removes the parent link for the current node.
 	 */
-	this.removeParent = function() {
+	this.deleteParent = function() {
+		if (parent) {	
 			parent = null;
+		} else {
+			throw new RangeError("TreeNode.deleteRightChild(): Cannot delete a non-existent parent.");
+		}
 	};
 	
 	/**
-	 * Removes a node (sets associated information to null).
+	 * Removes the current node.
 	 */
-	this.removeNode = function() {
+	this.deleteNode = function() {
 		parent = null;
-		children = [null, null];
+		leftChild = null;
+		rightChild = null;
 		nodeData = null;
 		nodeHeight = null;
+		subtreeHeight = null;
+		balanceFactor = null;
 	};
 	
 	/**

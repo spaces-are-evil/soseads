@@ -8,6 +8,8 @@ function BinarySearchTree() {
 	var treeHeight = 0;
 	var searchSuccess = false;
 	var foundNode = null;
+	
+
 	this.getRoot = function() {
 		return root;
 	};
@@ -20,49 +22,70 @@ function BinarySearchTree() {
 		return treeHeight;
 	};
 	
+
 	/**
 	 * Adds a TreeNode to the binary search tree
 	 * @param data the value to add as a TreeNode.
 	 */
+	/*
 	this.addNode = function(data) {
-		var newNodeFound = false;
-		var heightChange =true;
-		var height = 0;
+		if (data || data === 0) {
+			throw new ReferenceError("BinarySearchTree.addNode(data): data must be an alphanumerical character.");
+		}
+		var newNodeFound = false,
+			heightChange =true,
+			height = 0,
+			curNode = null,
+			curNodeData = null,
+			children = null,
+			addNode = null;
+
+		if (!root) {
+				root = new TreeNode(data);
+				root.setHeight(0);
+		} else {
+			curNode = root;
+			while (!newNodeFound)
+		}
+
+
+
+
 		//ensure the data passed to the function is valid
 		if (typeof data !== 'undefined' && data) {
 			//check if root value set, if not then we are adding root.
 			if (typeof root !== 'undefined' && root) {
-				var currNode = root;
+				
 				
 				while (!newNodeFound) {
-					var currNodeData = currNode.getNodeData();
-					var children = currNode.getAllChildren();
+					var curNodeData = curNode.getNodeData();
+					var children = curNode.getAllChildren();
 					height++;
 					//left path
-					if (data === currNodeData) {
+					if (data === curNodeData) {
 						heightChange = false;
 						break;
 					}
-					if (data < currNodeData) {
+					if (data < curNodeData) {
 						if (children && typeof children !== 'undefined' && children[0] && typeof children[0] !== 'undefined') {
-							currNode = children[0];
+							curNode = children[0];
 						} else {
 							var addNode = new TreeNode(data);
-							addNode.setParent(currNode);
+							addNode.setParent(curNode);
 							addNode.setHeight(height);
-							currNode.setNthChild(0, addNode);
+							curNode.setNthChild(0, addNode);
 							newNodeFound = true;
 						}
 					} 
 					//right path
 					else {
 						if (children && typeof children !== 'undefined' && children[1] && typeof children[1] !== 'undefined') {
-							currNode = children[1];
+							curNode = children[1];
 						} else {
 							var addNode = new TreeNode(data);
-							addNode.setParent(currNode);
+							addNode.setParent(curNode);
 							addNode.setHeight(height);
-							currNode.setNthChild(1, addNode);
+							curNode.setNthChild(1, addNode);
 							newNodeFound = true;
 						}
 					}
@@ -70,21 +93,65 @@ function BinarySearchTree() {
 			} 
 			//set root value.
 			else {
-				root = new TreeNode(data);
-				root.setHeight(0);
+
 			}
 		}
 		if (treeHeight < height && heightChange) treeHeight = height;
 	};
-	
+	*/
 	/**
 	 * Performs a pre order traversal on the binary search tree.
 	 * Finds a TreeNode that matches the value being searched for.
 	 * @param node the TreeNode to start the search from (usually the root node). 
 	 * @param data the value to search for.
+	 * @param new FLAG: true = searching for a new node; false = searching for existing node.
 	 * @return the TreeNode that matches the search, -1 if no match is found.
 	 */
-	this.preOrderSearch = function(node, data) {
+	 /*
+	this.preOrderSearch = function(node, data, new) {
+		var child,
+			nodeData;
+		try {
+			nodeData = node.getNodeData();
+			if (nodeData === data) {
+				return node;
+			} else {
+				for (var i = 0; i < node.getChildrenLength(); i++) {
+					child = node.getNthChild(i);
+				}	
+			}
+		} catch (err) {
+
+		}
+
+		}
+		for (var i = 0; i < node.getChildrenLength(); i++) {
+			try {
+				nodeData = node.getNodeData();
+				if (nodeData === data) {
+					return node;
+				} else {
+					child = node.getNthChild(i);
+				}	
+				if (!new) {
+					
+				} else {
+					
+				}
+				
+				
+			} catch (err) {
+				if (new) {
+					child = new TreeNode(data);
+					return
+				}
+				continue;
+			}
+		}
+
+
+
+
 		if (!searchSuccess) {	
 			//not a real node, step back
 			if (!node) return;
@@ -116,7 +183,7 @@ function BinarySearchTree() {
 		}
 		return foundNode;
 	};	
-
+	*/
 	/**
 	 * Removes a TreeNode from the binary search tree.
 	 * Removes leaves, nodes with 1 subtree and nodes with 2 subtrees.
@@ -230,7 +297,7 @@ function BinarySearchTree() {
 	*/
 }
 
-
+/*
 function AVLTree() { 
 	var root;
 	var treeHeight = 0;
@@ -247,6 +314,7 @@ function AVLTree() {
 	 * Adds a TreeNode to the AVL tree
 	 * @param data the value to add as a TreeNode.
 	 */
+	 /*
 	this.addNode = function(data) {
 		var newNodeFound = false;
 		var heightChange =true;
@@ -255,37 +323,37 @@ function AVLTree() {
 		if (typeof data !== 'undefined' && data) {
 			//check if root value set, if not then we are adding root.
 			if (typeof root !== 'undefined' && root) {
-				var currNode = root;
+				var curNode = root;
 				
 				while (!newNodeFound) {
-					var currNodeData = currNode.getNodeData();
-					var children = currNode.getAllChildren();
+					var curNodeData = curNode.getNodeData();
+					var children = curNode.getAllChildren();
 					height++;
 					//left path
-					if (data === currNodeData) {
+					if (data === curNodeData) {
 						heightChange = false;
 						break;
 					}
-					if (data < currNodeData) {
+					if (data < curNodeData) {
 						if (children && typeof children !== 'undefined' && children[0] && typeof children[0] !== 'undefined') {
-							currNode = children[0];
+							curNode = children[0];
 						} else {
 							var addNode = new TreeNode(data);
-							addNode.setParent(currNode);
+							addNode.setParent(curNode);
 							addNode.setHeight(height + 1);
-							currNode.setNthChild(0, addNode);
+							curNode.setNthChild(0, addNode);
 							newNodeFound = true;
 						}
 					} 
 					//right path
 					else {
 						if (children && typeof children !== 'undefined' && children[1] && typeof children[1] !== 'undefined') {
-							currNode = children[1];
+							curNode = children[1];
 						} else {
 							var addNode = new TreeNode(data);
-							addNode.setParent(currNode);
+							addNode.setParent(curNode);
 							addNode.setHeight(height + 1);
-							currNode.setNthChild(1, addNode);
+							curNode.setNthChild(1, addNode);
 							newNodeFound = true;
 						}
 					}
@@ -316,6 +384,7 @@ function AVLTree() {
 	
 	};
 }
+*/
 /*
 var RedBlackTree = new Class({
 

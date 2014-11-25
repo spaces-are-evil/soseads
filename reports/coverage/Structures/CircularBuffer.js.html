@@ -199,18 +199,18 @@
     <h1>Code coverage report for <span class="entity">Structures\CircularBuffer.js</span></h1>
     <h2>
         
-        Statements: <span class="metric">84.62% <small>(55 / 65)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Statements: <span class="metric">100% <small>(65 / 65)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
         
         
-        Branches: <span class="metric">72% <small>(36 / 50)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Branches: <span class="metric">100% <small>(50 / 50)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
         
         
-        Functions: <span class="metric">90% <small>(9 / 10)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Functions: <span class="metric">100% <small>(10 / 10)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
         
         
-        Lines: <span class="metric">84.62% <small>(55 / 65)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Lines: <span class="metric">100% <small>(65 / 65)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
         
-        Ignored: <span class="metric"><span class="ignore-none">none</span></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Ignored: <span class="metric">10 statements, 1 function, 14 branches</span> &nbsp;&nbsp;&nbsp;&nbsp;
     </h2>
     <div class="path"><a href="../index.html">All files</a> &#187; <a href="index.html">Structures\</a> &#187; CircularBuffer.js</div>
 </div>
@@ -381,7 +381,9 @@
 163
 164
 165
-166</td><td class="line-coverage"><span class="cline-any cline-neutral">&nbsp;</span>
+166
+167</td><td class="line-coverage"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -395,22 +397,22 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -559,23 +561,24 @@
  * @param obj The variable or object to examine.
  * @return True if the variable or object is empty, false otherwise.
  */
-<span class="fstat-no" title="function not covered" >function isVarObjEmpty(obj) {</span>
-<span class="cstat-no" title="statement not covered" >	var propCount = 0,</span>
+ /* istanbul ignore next */
+<span class="fstat-skip" title="function not covered" >function isVarObjEmpty(obj) {</span>
+<span class="cstat-skip" title="statement not covered" >	var propCount = 0,</span>
 		validPropCount = 0;
-<span class="cstat-no" title="statement not covered" >	if (!obj &amp;&amp; obj !== 0) {</span>
-<span class="cstat-no" title="statement not covered" >		return true;</span>
+<span class="cstat-skip" title="statement not covered" >	if (!obj &amp;&amp; obj !== 0) {</span>
+<span class="cstat-skip" title="statement not covered" >		return true;</span>
 	} else {
-<span class="cstat-no" title="statement not covered" >		for (var i in obj) {</span>
-<span class="cstat-no" title="statement not covered" >			propCount++;</span>
-<span class="cstat-no" title="statement not covered" >			if (obj.hasOwnProperty(i) &amp;&amp; (obj[i] || obj[i] === 0)) {</span>
-<span class="cstat-no" title="statement not covered" >				validPropCount++;</span>
+<span class="cstat-skip" title="statement not covered" >		for (var i in obj) {</span>
+<span class="cstat-skip" title="statement not covered" >			propCount++;</span>
+<span class="cstat-skip" title="statement not covered" >			if (obj.hasOwnProperty(i) &amp;&amp; (obj[i] || obj[i] === 0)) {</span>
+<span class="cstat-skip" title="statement not covered" >				validPropCount++;</span>
 			}
 		}
 	}
-<span class="cstat-no" title="statement not covered" >	if (typeof obj === 'object' &amp;&amp; propCount &gt;= 0 &amp;&amp; validPropCount === 0) {</span>
-<span class="cstat-no" title="statement not covered" >		return true;</span>
+<span class="cstat-skip" title="statement not covered" >	if (typeof obj === 'object' &amp;&amp; propCount &gt;= 0 &amp;&amp; validPropCount === 0) {</span>
+<span class="cstat-skip" title="statement not covered" >		return true;</span>
 	} else {
-<span class="cstat-no" title="statement not covered" >		return false;</span>
+<span class="cstat-skip" title="statement not covered" >		return false;</span>
 	}
 }
 &nbsp;
@@ -716,7 +719,7 @@ function CircularBuffer(size) {
 
 </div>
 <div class="footer">
-    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Tue Nov 25 2014 10:56:55 GMT-0800 (Pacific Standard Time)</div>
+    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Tue Nov 25 2014 15:19:02 GMT-0800 (Pacific Standard Time)</div>
 </div>
 
 <script src="../prettify.js"></script>

@@ -10,7 +10,8 @@
  * 		- Objects with parameters are not empty as long as one parameter is set.
  * @param obj The variable or object to examine.
  * @return True if the variable or object is empty, false otherwise.
- */
+ */ 
+ /* istanbul ignore next */
 function isVarObjEmpty(obj) {
 	var propCount = 0,
 		validPropCount = 0;
@@ -77,7 +78,7 @@ function Queue() {
 		if(!isVarObjEmpty(object) && (object || object === 0)) {
 			dataArr.push(object);
 		}
-		else /*if (!object || isVarObjEmpty(object))*/ {
+		else {
 			throw new ReferenceError("Queue.enqueue(): cannot enqueue a falsey object");
 		}
 	};

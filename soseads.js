@@ -11,6 +11,7 @@
  * @param obj The variable or object to examine.
  * @return True if the variable or object is empty, false otherwise.
  */
+ /* istanbul ignore next */
 function isVarObjEmpty(obj) {
 	var propCount = 0,
 		validPropCount = 0;
@@ -24,7 +25,7 @@ function isVarObjEmpty(obj) {
 			}
 		}
 	}
-	if (typeof obj === 'object' && propCount >= 0 && validPropCount === 0) {
+	if (obj instanceof Object && propCount >= 0 && validPropCount === 0) {
 		return true;
 	} else {
 		return false;
@@ -76,7 +77,7 @@ function Queue() {
 		if(!isVarObjEmpty(object) && (object || object === 0)) {
 			dataArr.push(object);
 		}
-		else /*if (!object || isVarObjEmpty(object))*/ {
+		else {
 			throw new ReferenceError("Queue.enqueue(): cannot enqueue a falsey object");
 		}
 	};
@@ -144,12 +145,37 @@ function CircularBuffer(size) {
 		bufCount = 0, //number of elements in buffer
 		bufArr = [];
 	if (!size) {
-		throw new RangeError("cannot instantiate ciruclar buffer with no size.");
+		throw new RangeError("CircularBuffer: cannot instantiate ciruclar buffer with no size.");
 	}
 	else {
 		bufSize = size;
 		bufArr = new Array(bufSize);
 	}
+
+	/**
+	 * Returns the current number of elements in the buffer.
+	 * @return Element count in the buffer.
+	 */
+	 this.size = function() {
+	 	var size = 0;
+	 	for (var i = 0; i < bufSize; i++) {
+	 		if (bufArr[i] || bufArr[i] === 0) {
+	 			size++;
+	 		}
+	 	}
+	 	return size;
+	 };
+
+	 /**
+	  * Clears out the circular buffer contents and resets
+	  * to its initial size.
+	  */
+	 this.clear = function() {
+	 	bufArr = new Array(bufSize);
+	 	bufStart = 0;
+	 	bufEnd = 0;
+	 	bufCount = 0;
+	 };
 
  	/**
  	 * Checks if the circular buffer is empty.
@@ -173,14 +199,18 @@ function CircularBuffer(size) {
  	 * @param object The object to write to the circular buffer.
  	 */
 	this.write = function(object) {
-		if (!bufArr[bufEnd] && bufCount < bufSize) {
-			bufCount++;
+		if (isVarObjEmpty(object)) {
+			throw new ReferenceError("CircularBuffer.write(object): object must be either a truthy variable (including 0) or an object with at least 1 initialized parameter.");
+		} else {
+			if (!bufArr[bufEnd] && bufCount < bufSize) {
+				bufCount++;
+			}
+			if (bufArr[bufEnd] || bufArr[bufEnd] === 0) {
+				console.log("CIRCULAR BUFFER OVERRIDE: POSITION: " + bufEnd + " | OLD OBJECT: " + bufArr[bufEnd].toString() + " | NEW OBJECT: " + object.toString());
+			}
+			bufArr[bufEnd] = object; 
+			bufEnd = (bufEnd + 1) % bufSize;			
 		}
-		if (bufArr[bufEnd]) {
-			console.log("BUFFER OVERRIDE: POSITION: " + bufEnd + " | OLD OBJECT: " + bufArr[bufEnd].toString() + " | NEW OBJECT: " + object.toString());
-		}
-		bufArr[bufEnd] = object; 
-		bufEnd = (bufEnd + 1) % bufSize;
 	};
 
 	/**
@@ -189,8 +219,8 @@ function CircularBuffer(size) {
 	 * @return the oldest object in the circular buffer.
 	 */
 	this.read = function() {
-		if (!bufArr[bufStart]) {
-			throw new ReferenceError("read(): you cannot read from an empty circular buffer");
+		if (!bufArr[bufStart] && bufArr[bufStart] !== 0) {
+			throw new ReferenceError("CircularBuffer.read(): you cannot read from an empty circular buffer");
 		}
 		var retVal = bufArr[bufStart];
 		bufArr[bufStart] = "";
@@ -198,6 +228,19 @@ function CircularBuffer(size) {
 		bufCount--;
 		return retVal;
 	};
+
+	/**
+	 * Retrieves the oldest object from the circular buffer
+	 * without removing this object from the buffer.
+	 * @return the oldest object in the circular buffer.
+	 */
+	this.peek = function() {
+		if (!bufArr[bufStart] && bufArr[bufStart] !== 0) {
+			throw new ReferenceError("CircularBuffer.peek(): cannot peek an empty circualr buffer.");
+		}
+		return bufArr[bufStart];
+	};
+
 	/**
 	 * Returns a string representation of the circular buffer. Represented as 
 	 * [a1,a2,....,an-1,an] where an is the index - 1 of the element in the circular buffer.
@@ -209,7 +252,12 @@ function CircularBuffer(size) {
 			if (i > 0) {
 				retStr+= " ";
 			}
-			retStr += bufArr[i].toString();
+			if (bufArr[i] || bufArr[i] === 0) {
+				retStr += bufArr[i].toString();
+			} else {
+				retStr += '#';
+			}
+			
 			if (i < bufArr.length - 1) {
 				retStr += ",";
 			}
