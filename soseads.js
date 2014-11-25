@@ -1,4 +1,36 @@
-//FINISHED: 11/21/2014 10:55
+/**
+ * Helper function to ensure that a variable or object is empty.
+ * Examines variables to see if they are an object. If they are an object
+ * this checks to make sure that at least 1 parameter in the project is set.
+ * For purposes of this library, the following conditions hold:
+ * 		- variables that are undefined, null or equal an empty string are empty.
+ * 		- we allow 0 to be a truthy value.
+ * 		- Objects without parameters are empty.
+ * 		- Objects with parameters are empty if all parameters are undefined, null or equal an empty string.
+ * 		- Objects with parameters are not empty as long as one parameter is set.
+ * @param obj The variable or object to examine.
+ * @return True if the variable or object is empty, false otherwise.
+ */
+function isVarObjEmpty(obj) {
+	var propCount = 0,
+		validPropCount = 0;
+	if (!obj && obj !== 0) {
+		return true;
+	} else {
+		for (var i in obj) {
+			propCount++;
+			if (obj.hasOwnProperty(i) && (obj[i] || obj[i] === 0)) {
+				validPropCount++;
+			}
+		}
+	}
+	if (typeof obj === 'object' && propCount >= 0 && validPropCount === 0) {
+		return true;
+	} else {
+		return false;
+	}
+}
+
 /**
  * Queue Data Structure. FIFO (First in first out) data structure.
  */
@@ -20,16 +52,12 @@ function Queue() {
 	this.isEmpty = function() {
 		if (dataArr.length === 0) {
 			return true;
-		}
-		for (var i in dataArr) {
-			if (dataArr[i]) {
+		} else {
+			for (var i in dataArr) {
 				return false;
-			}
-			else {
-				continue;
-			}
+			}			
 		}
-		return true;
+
 	};
 	
 	/**
@@ -45,11 +73,11 @@ function Queue() {
 	 * @return true if the add was successful, false otherwise.
 	 */
 	this.enqueue = function(object) {
-		if(object) {
+		if(!isVarObjEmpty(object) && (object || object === 0)) {
 			dataArr.push(object);
 		}
-		else {
-			throw new ReferenceError("enqueue(): cannot enqueue a falsey object");
+		else /*if (!object || isVarObjEmpty(object))*/ {
+			throw new ReferenceError("Queue.enqueue(): cannot enqueue a falsey object");
 		}
 	};
 
@@ -61,7 +89,7 @@ function Queue() {
 	 */
 	this.peek = function() {
 		if (dataArr.length === 0) {
-			throw new ReferenceError("peek(): cannot peek an empty queue");
+			throw new ReferenceError("Queue.peek(): cannot peek an empty queue");
 		}
 		else {
 			return dataArr[0];
@@ -76,7 +104,7 @@ function Queue() {
 	 */
 	this.dequeue = function() {
 		if (dataArr.length === 0) {
-			throw new ReferenceError("peek(): cannot dequeue an empty queue");
+			throw new ReferenceError("Queue.dequeue(): cannot dequeue an empty queue");
 		}
 		else {
 			return dataArr.splice(0,1)[0];

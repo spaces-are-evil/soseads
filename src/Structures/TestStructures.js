@@ -1,4 +1,5 @@
 function startTest() {
+	/*
 	var testQueue = new Queue();
 	testQueue.enqueue(0);
 	console.log(testQueue.toString());
@@ -13,6 +14,7 @@ function startTest() {
 	testQueue.enqueue(6);
 	console.log(testQueue.toString());
 	testQueue.enqueue(7);
+	console.log("Is empty? " + testQueue.isEmpty());
 	var newObj = {name: null, age: 21};
 	testQueue.enqueue(newObj);
 	console.log(testQueue.toString());
@@ -28,6 +30,55 @@ function startTest() {
 	console.log(testQueue.toString());
 	console.log(newQueue.toString());
 	console.log(newQueue.dataArr);
+	*/
+	var buffer = new CircularBuffer(7);
+	buffer.write(0);
+	buffer.write('a');
+	buffer.write(1);
+	buffer.write('b');
+	buffer.write(2);
+	buffer.write('c');
+	buffer.write(3);
+	buffer.write(0);
+	buffer.write('a');
+	buffer.write(1);
+	buffer.write('b');
+	buffer.write(2);
+	buffer.write('c');
+	buffer.write(3);
+	buffer.write(0);
+	buffer.write('a');
+	buffer.write(1);
+	buffer.write('b');
+	buffer.write(2);
+	buffer.write('c');
+	buffer.write(3);
+	buffer.write();
+	buffer.write(null);
+	var newObj = {};
+	buffer.write(newObj);
+	/*
+	console.log("Is buffer full? " + buffer.isFull());
+	console.log("Is buffer empty?" + buffer.isEmpty());
+	var readVal = buffer.read();
+	console.log("Read value: " + readVal);
+	var readVal = buffer.read();
+	console.log("Read value: " + readVal);
+	var readVal = buffer.read();
+	console.log("Read value: " + readVal);
+	var readVal = buffer.read();
+	console.log("Read value: " + readVal);
+	var readVal = buffer.read();
+	console.log("Read value: " + readVal);
+	var readVal = buffer.read();
+	console.log("Read value: " + readVal);
+	var readVal = buffer.read();
+	console.log("Read value: " + readVal);
+	console.log("Is buffer full? " + buffer.isFull());
+	console.log("Is buffer empty?" + buffer.isEmpty());
+	*/
+
+
 	/*
 	var bst = new BinarySearchTree();
 	bst.addNode(10);

@@ -41,14 +41,6 @@ describe("Queue data structure", function() {
 		expect(queue.isEmpty()).toBe(false);
 	});
 
-	it ("Is Not Empty when queue elements exist", function() {
-		queue.dequeue(); //0
-		queue.dequeue(); //a
-		queue.dequeue(); //1
-		expect(queue.isEmpty()).toBe(false);
-	});
-
-
 	it ("Dequeues", function() {
 		var head = queue.dequeue();
 		expect(head).toEqual(0);
@@ -74,12 +66,14 @@ describe("Queue data structure", function() {
 		queue.dequeue(); //c
 		expect(function() {
 			queue.dequeue();
-		}).toThrowError("Queue.peek(): cannot dequeue an empty queue");
+		}).toThrowError("Queue.dequeue(): cannot dequeue an empty queue");
 	});
 
 	it ("Enqueues truthy values", function() {
-		queue.enqueue(3);
-		queue.enqueue('d');
+		var newVar = 3;
+		var newObj = {value: 'd'};
+		queue.enqueue(newVar);
+		queue.enqueue(newObj);
 		queue.dequeue(); //0
 		queue.dequeue(); //a
 		queue.dequeue(); //1
@@ -89,7 +83,7 @@ describe("Queue data structure", function() {
 		var head = queue.dequeue();
 		expect(head).toEqual(3);
 		head = queue.dequeue();
-		expect(head).toEqual('d');
+		expect(head).toEqual(newObj);
 		expect(queue.isEmpty()).toBeTruthy();
 	});
 
