@@ -11,7 +11,7 @@
  * @param parent The node's parent. Null if not set
  * @param height The node's height. Null if not set
  */
-function BinaryTreeNode(data, left, right, parent, height) {
+function BinaryTreeNode(data, parent, left, right, height) {
 	var nodeData = data || null,
 	 	parent = parent || null,
 		leftChild = left || null,
@@ -78,6 +78,88 @@ function BinaryTreeNode(data, left, right, parent, height) {
 	};
 			
 	/**
+	 * Checks if node has a parent.
+	 * @return true if node has parent, false otherwise.
+	 */
+	this.hasParent = function() {
+		return (parent) ? true : false;
+	}
+
+	/**
+	 * Checks if node has exactly 1 child.
+	 * @return true if node has either a left or right child.
+	    returns false if it has neither or both.
+	 */
+	this.hasChild = function() {
+		if ((leftChild && !rightChild) || (!leftChild && rightChild)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	/**
+	 * Checks if node has both children.
+	 * @return true if node has both children, false otherwise.
+	 */
+	this.hasChildren = function() {
+		return (leftChild && rightChild) ? true : false;
+	}
+		
+	/**
+	 * Get the height of the current node.
+	 * @return The height of the current node if found, -1 if node height not found.
+	 */
+	this.getHeight = function() {
+		return (nodeHeight || nodeHeight === 0) nodeHeight : -1;
+	};
+				
+	/**
+	 * Get the data of the current node.
+	 * @return The data of the current node if found, -1 if node data not found.
+	 */
+	this.getNodeData = function() {
+		return (nodeData === 0 || nodeData) ? nodeData : -1;
+	};
+				
+	/**
+	 * Gets the left child  of the current node.
+	 * @return The left child of the current node if found, -1 if left child not found.
+	 */
+	this.getLeftChild = function() {
+		return (leftChild) ? leftChild : -1;
+	};
+
+	/**
+	 * Gets the right child  of the current node.
+	 * @return The right child of the current node if found, -1 if right child not found.
+	 */
+	this.getLeftChild = function() {
+		return (rightChild) ? rightChild : -1;
+	};
+				
+	/**
+	 * Gets the parent of a current node.
+	 * @return the parent of a current node if found, -1 if parent not found.
+	 */
+	this.getParent = function() {
+		return (parent) ? parent : -1;
+	};
+
+	/**
+	 * Gets the balance factor for the current node;
+	 * @return the balance factor of the current node.
+	 *
+	 */
+	this.getBalanceFactor = function() {
+		if (balanceFactor || balanceFactor === 0) {
+			return balanceFactor;
+		} 
+		else { 
+			throw new ReferenceError('BinaryTreeNode.getBalanceFactor(): balance factor not set for current node.');
+		}
+	};
+
+	/**
 	* Sets the height of the current node. Increases overall performance.
 	* @param data The height of the current node.
 	*/
@@ -96,7 +178,7 @@ function BinaryTreeNode(data, left, right, parent, height) {
 	 */
 	this.setNodeData = function(data) {
 		var regExp = "[0-9a-zA-Z]+";
-		if (regExp.test(data.toString())) {
+		if (regExp.test(data)) {
 			nodeData = data;
 		}
 		else {
@@ -165,77 +247,6 @@ function BinaryTreeNode(data, left, right, parent, height) {
 				break;
 			}
 			
-		}
-	};
-		
-	/**
-	 * Get the height of the current node.
-	 * @return The height of the current node.
-	 */
-	this.getHeight = function() {
-		if (nodeHeight !== 0 || !nodeHeight) {
-			throw new ReferenceError('BinaryTreeNode.getHeight(): current node height not set.');
-		}
-		return nodeHeight;
-	};
-				
-	/**
-	 * Get the data of the current node.
-	 * @return The data of the current node.
-	 */
-	this.getNodeData = function() {
-		if (nodeData !== 0 || !nodeData) {
-			throw new ReferenceError('BinaryTreeNode.getNodeData(): current node data not set.');
-		}
-		return nodeData;
-	};
-				
-	/**
-	 * Gets the left child  of the current node.
-	 * @return The left child of the current node.
-	 */
-	this.getLeftChild = function() {
-		if (!leftChild) {
-			throw new ReferenceError('BinaryTreeNode.getNthChild(): child' + nth + "does not exist for current node.");
-		}
-		return children[nth];
-	};
-
-	/**
-	 * Gets the right child  of the current node.
-	 * @return The right child of the current node.
-	 */
-	this.getLeftChild = function() {
-		if (!rightChild) {
-			throw new ReferenceError('BinaryTreeNode.getNthChild(): child' + nth + "does not exist for current node.");
-		}
-		return children[nth];
-	};
-				
-	/**
-	 * Gets the parent of a current node.
-	 * @return the parent of a current node.
-	 */
-	this.getParent = function() {
-		if (parent) {
-			return parent;
-		}
-		else { 
-			throw new ReferenceError('BinaryTreeNode.getParent(): no parent exists for current node.');
-		}
-	};
-
-	/**
-	 * Gets the balance factor for the current node;
-	 * @return the balance factor of the current node.
-	 *
-	 */
-	this.getBalanceFactor = function() {
-		if (balanceFactor || balanceFactor === 0) {
-			return balanceFactor;
-		} 
-		else { 
-			throw new ReferenceError('BinaryTreeNode.getBalanceFactor(): balance factor not set for current node.');
 		}
 	};
 	
