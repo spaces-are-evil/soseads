@@ -47,7 +47,7 @@ function Stack() {
 	 */
 	this.isEmpty = function() {
 		return (dataArr.length === 0) ? true : false;
-	}
+	};
 
 	/**
 	 * Returns the number of elements in the stack.
@@ -55,7 +55,7 @@ function Stack() {
 	 */
 	this.size = function() {
 		return dataArr.length;
-	}
+	};
 
 	/**
 	 * Empties the stack of all elements.

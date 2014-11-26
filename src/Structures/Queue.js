@@ -79,7 +79,7 @@ function Queue() {
 			dataArr.push(object);
 		}
 		else {
-			throw new ReferenceError("Queue.enqueue(): cannot enqueue a falsey object");
+			throw new ReferenceError("Queue.enqueue(object): object must be a valid variable or object. Objects must have at least 1 parameter that is initialized and not null.");
 		}
 	};
 

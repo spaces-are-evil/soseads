@@ -23,21 +23,13 @@ describe("Queue data structure", function() {
 		expect(queue.size()).toBe(8);
 	});
 
-	it ("Is empty when no queue elements exist", function() {
-		queue.dequeue(); //0
-		queue.dequeue(); //a
-		queue.dequeue(); //1
-		queue.dequeue(); //b
-		queue.dequeue(); //2
-		queue.dequeue(); //c
+	it ("Clear empties the queue and is empty when no queue elements exist", function() {
+		queue.clear();
 		expect(queue.isEmpty()).toBeTruthy();
 
 	});
 
 	it ("Is Not Empty when queue elements exist", function() {
-		queue.dequeue(); //0
-		queue.dequeue(); //a
-		queue.dequeue(); //1
 		expect(queue.isEmpty()).toBe(false);
 	});
 
@@ -58,64 +50,61 @@ describe("Queue data structure", function() {
 	});
 
 	it("Throws error if dequeuing an empty queue", function() {
-		queue.dequeue(); //0
-		queue.dequeue(); //a
-		queue.dequeue(); //1
-		queue.dequeue(); //b
-		queue.dequeue(); //2
-		queue.dequeue(); //c
+		queue.clear();
 		expect(function() {
 			queue.dequeue();
 		}).toThrowError("Queue.dequeue(): cannot dequeue an empty queue");
 	});
 
 	it ("Enqueues truthy values", function() {
-		var newVar = 3;
-		var newObj = {value: 'd'};
-		queue.enqueue(newVar);
-		queue.enqueue(newObj);
-		queue.dequeue(); //0
-		queue.dequeue(); //a
-		queue.dequeue(); //1
-		queue.dequeue(); //b
-		queue.dequeue(); //2
-		queue.dequeue(); //c
-		var head = queue.dequeue();
-		expect(head).toEqual(3);
-		head = queue.dequeue();
-		expect(head).toEqual(newObj);
-		expect(queue.isEmpty()).toBeTruthy();
+		queue.clear();
+		expect(function() {
+			queue.enqueue(true);
+			expect(queue.dequeue()).toBe(true);
+			queue.enqueue(0);
+			expect(queue.dequeue()).toEqual(0);
+			var newObj = {age: 21};
+			queue.enqueue(newObj);
+			expect(queue.dequeue()).toEqual(newObj);
+			var newObj1 = {name: null, age: 21};
+			queue.enqueue(newObj1);
+			expect(queue.dequeue()).toEqual(newObj1);
+			queue.enqueue('z');
+			expect(queue.dequeue()).toEqual('z');
+			queue.enqueue("not false");
+			expect(queue.dequeue()).toEqual("not false");
+		}).not.toThrowError("Queue.enqueue(object): object must be a valid variable or object. Objects must have at least 1 parameter that is initialized and not null.");
 	});
 
 	it ("Throws error if enqueuing falsey objects", function() {
 		expect(function() {
 			queue.enqueue();
-		}).toThrowError("Queue.enqueue(): cannot enqueue a falsey object");
+		}).toThrowError("Queue.enqueue(object): object must be a valid variable or object. Objects must have at least 1 parameter that is initialized and not null.");
 		expect(function() {
 			queue.enqueue(false);
-		}).toThrowError("Queue.enqueue(): cannot enqueue a falsey object");
+		}).toThrowError("Queue.enqueue(object): object must be a valid variable or object. Objects must have at least 1 parameter that is initialized and not null.");
 		expect(function() {
 			queue.enqueue(null);
-		}).toThrowError("Queue.enqueue(): cannot enqueue a falsey object");
+		}).toThrowError("Queue.enqueue(object): object must be a valid variable or object. Objects must have at least 1 parameter that is initialized and not null.");
 		expect(function() {
 			queue.enqueue("");
-		}).toThrowError("Queue.enqueue(): cannot enqueue a falsey object");
+		}).toThrowError("Queue.enqueue(object): object must be a valid variable or object. Objects must have at least 1 parameter that is initialized and not null.");
 		expect(function() {
 			var newObj;
 			queue.enqueue(newObj);
-		}).toThrowError("Queue.enqueue(): cannot enqueue a falsey object");
+		}).toThrowError("Queue.enqueue(object): object must be a valid variable or object. Objects must have at least 1 parameter that is initialized and not null.");
 		expect(function() {
 			var newObj = {};
 			queue.enqueue(newObj);
-		}).toThrowError("Queue.enqueue(): cannot enqueue a falsey object");
+		}).toThrowError("Queue.enqueue(object): object must be a valid variable or object. Objects must have at least 1 parameter that is initialized and not null.");
 		expect(function() {
 			var newObj = {name: null};
 			queue.enqueue(newObj);
-		}).toThrowError("Queue.enqueue(): cannot enqueue a falsey object");
+		}).toThrowError("Queue.enqueue(object): object must be a valid variable or object. Objects must have at least 1 parameter that is initialized and not null.");
 		expect(function() {
 			var newObj = {name: null, age: null};
 			queue.enqueue(newObj);
-		}).toThrowError("Queue.enqueue(): cannot enqueue a falsey object");
+		}).toThrowError("Queue.enqueue(object): object must be a valid variable or object. Objects must have at least 1 parameter that is initialized and not null.");
 	});
 
 	it ("Allows objects to enqueue with at least 1 set parameter", function() {
@@ -128,7 +117,7 @@ describe("Queue data structure", function() {
 		queue.dequeue(); //c
 		queue.enqueue(newObj);
 		var peek = queue.peek();
-		expect(peek).toBe(newObj);
+		expect(peek).toEqual(newObj);
 	});
 
 	it ("Is cleared", function() {
@@ -160,6 +149,6 @@ describe("Queue data structure", function() {
 
 	it ("Converts to string", function() {
 		var queueStr = queue.toString();
-		expect(queueStr).toBe("[0, a, 1, b, 2, c]");
+		expect(queueStr).toEqual("[0, a, 1, b, 2, c]");
 	});
 });
