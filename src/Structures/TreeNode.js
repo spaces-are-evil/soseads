@@ -6,12 +6,12 @@
  * NOTICE: Optional parameters cannot be skipped.
  * If you want to pass height, all other parameters must be filled.
  * @param data Data the node will house. Null if not set
- * @param parent The node's parent. Null if not set
  * @param left The node's left child. Null if not set
  * @param right The node's right child. Null if not set
+ * @param parent The node's parent. Null if not set
  * @param height The node's height. Null if not set
  */
-function TreeNode(data, parent, left, right, height) {
+function TreeNode(data, left, right, parent, height) {
 	var nodeData = data || null,
 	 	parent = parent || null,
 		leftChild = left || null,

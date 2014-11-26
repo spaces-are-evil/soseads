@@ -1,0 +1,3 @@
+var SplayTree = new Class({ 
+
+});

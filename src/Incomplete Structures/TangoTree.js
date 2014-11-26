@@ -1,0 +1,3 @@
+var TangoTree = new Class({
+
+});
