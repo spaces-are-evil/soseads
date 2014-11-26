@@ -11,7 +11,7 @@
  * @param parent The node's parent. Null if not set
  * @param height The node's height. Null if not set
  */
-function TreeNode(data, left, right, parent, height) {
+function BinaryTreeNode(data, left, right, parent, height) {
 	var nodeData = data || null,
 	 	parent = parent || null,
 		leftChild = left || null,
@@ -62,7 +62,7 @@ function TreeNode(data, left, right, parent, height) {
 	};
 	
 	/**
-	* Check if a tree node is a root node.
+	* Check if a binary tree node is a root node.
 	* @return True if parent is null (root condition), false otherwise.
 	*/
 	this.isRoot = function() {
@@ -70,7 +70,7 @@ function TreeNode(data, left, right, parent, height) {
 	};
 		
 	/**
-	*Check if a tree node is a leaf
+	*Check if a binary tree node is a leaf
 	* @return True if no children exist (leaf condition), false otherwise.
 	*/
 	this.isLeaf = function() {
@@ -86,7 +86,7 @@ function TreeNode(data, left, right, parent, height) {
 			nodeHeight = data;
 		}
 		else {
-			throw new RangeError('TreeNode.setHeight(data): data must be a valid integer');
+			throw new RangeError('BinaryTreeNode.setHeight(data): data must be a valid integer');
 		}
 	};
 
@@ -100,7 +100,7 @@ function TreeNode(data, left, right, parent, height) {
 			nodeData = data;
 		}
 		else {
-			throw new RangeError('TreeNode.setNodeData(data): binary search trees only accept alphanumerical characters');
+			throw new RangeError('BinaryTreeNode.setNodeData(data): binary search trees only accept alphanumerical characters');
 		}
 	};	
 		
@@ -109,10 +109,10 @@ function TreeNode(data, left, right, parent, height) {
 	 * @param node The node that the left child will be.
 	 */
 	 this.setLeftChild = function(node) {
-	 	if (node instanceof TreeNode) {
+	 	if (node instanceof BinaryTreeNode) {
 	 		leftChild = node;
 	 	} else {
-	 		throw new ReferenceError("TreeNode.setLeftChild(node): node must be of type TreeNode.");
+	 		throw new ReferenceError("BinaryTreeNode.setLeftChild(node): node must be of type BinaryTreeNode.");
 	 	}
 	 }
 
@@ -121,10 +121,10 @@ function TreeNode(data, left, right, parent, height) {
 	 * @param node The node that the left child will be.
 	 */
 	 this.setRightChild = function(node) {
-	 	if (node instanceof TreeNode) {
+	 	if (node instanceof BinaryTreeNode) {
 	 		rightChild = node;
 	 	} else {
-	 		throw new ReferenceError("TreeNode.setRightChild(node): node must be of type TreeNode.");
+	 		throw new ReferenceError("BinaryTreeNode.setRightChild(node): node must be of type BinaryTreeNode.");
 	 	}
 	 }
 				
@@ -133,11 +133,11 @@ function TreeNode(data, left, right, parent, height) {
 	 * @param node the node to set the parent as.
 	 */
 	this.setParent = function(node) {
-		if (node instanceof TreeNode) {
+		if (node instanceof BinaryTreeNode) {
 			parent = node;
 		}
 		else { 
-			throw new ReferenceError('TreeNode.setParent(node): node must be of type TreeNode');
+			throw new ReferenceError('BinaryTreeNode.setParent(node): node must be of type BinaryTreeNode');
 		}
 	};
 		
@@ -174,7 +174,7 @@ function TreeNode(data, left, right, parent, height) {
 	 */
 	this.getHeight = function() {
 		if (nodeHeight !== 0 || !nodeHeight) {
-			throw new ReferenceError('TreeNode.getHeight(): current node height not set.');
+			throw new ReferenceError('BinaryTreeNode.getHeight(): current node height not set.');
 		}
 		return nodeHeight;
 	};
@@ -185,7 +185,7 @@ function TreeNode(data, left, right, parent, height) {
 	 */
 	this.getNodeData = function() {
 		if (nodeData !== 0 || !nodeData) {
-			throw new ReferenceError('TreeNode.getNodeData(): current node data not set.');
+			throw new ReferenceError('BinaryTreeNode.getNodeData(): current node data not set.');
 		}
 		return nodeData;
 	};
@@ -196,7 +196,7 @@ function TreeNode(data, left, right, parent, height) {
 	 */
 	this.getLeftChild = function() {
 		if (!leftChild) {
-			throw new ReferenceError('TreeNode.getNthChild(): child' + nth + "does not exist for current node.");
+			throw new ReferenceError('BinaryTreeNode.getNthChild(): child' + nth + "does not exist for current node.");
 		}
 		return children[nth];
 	};
@@ -207,7 +207,7 @@ function TreeNode(data, left, right, parent, height) {
 	 */
 	this.getLeftChild = function() {
 		if (!rightChild) {
-			throw new ReferenceError('TreeNode.getNthChild(): child' + nth + "does not exist for current node.");
+			throw new ReferenceError('BinaryTreeNode.getNthChild(): child' + nth + "does not exist for current node.");
 		}
 		return children[nth];
 	};
@@ -221,7 +221,7 @@ function TreeNode(data, left, right, parent, height) {
 			return parent;
 		}
 		else { 
-			throw new ReferenceError('TreeNode.getParent(): no parent exists for current node.');
+			throw new ReferenceError('BinaryTreeNode.getParent(): no parent exists for current node.');
 		}
 	};
 
@@ -235,7 +235,7 @@ function TreeNode(data, left, right, parent, height) {
 			return balanceFactor;
 		} 
 		else { 
-			throw new ReferenceError('TreeNode.getBalanceFactor(): balance factor not set for current node.');
+			throw new ReferenceError('BinaryTreeNode.getBalanceFactor(): balance factor not set for current node.');
 		}
 	};
 	
@@ -247,7 +247,7 @@ function TreeNode(data, left, right, parent, height) {
 			leftChild = null;
 		}
 		else {
-			throw new RangeError("TreeNode.deleteLeftChild(): Cannot delete a non-existent child.");
+			throw new RangeError("BinaryTreeNode.deleteLeftChild(): Cannot delete a non-existent child.");
 		}
 	};
 
@@ -259,7 +259,7 @@ function TreeNode(data, left, right, parent, height) {
 			rightChild = null;
 		}
 		else {
-			throw new RangeError("TreeNode.deleteRightChild(): Cannot delete a non-existent child.");
+			throw new RangeError("BinaryTreeNode.deleteRightChild(): Cannot delete a non-existent child.");
 		}
 	}
 
@@ -270,7 +270,7 @@ function TreeNode(data, left, right, parent, height) {
 		if (parent) {	
 			parent = null;
 		} else {
-			throw new RangeError("TreeNode.deleteRightChild(): Cannot delete a non-existent parent.");
+			throw new RangeError("BinaryTreeNode.deleteRightChild(): Cannot delete a non-existent parent.");
 		}
 	};
 	
@@ -293,7 +293,7 @@ function TreeNode(data, left, right, parent, height) {
 	 * @return A string representation of the node.
 	 */
 	this.toString = function() {
-		var retVal = nodeData + "|" + nodeHeight;
+		var retVal = nodeData;
 		return retVal;
 	};
 }

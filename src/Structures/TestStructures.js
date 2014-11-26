@@ -31,6 +31,8 @@ function startTest() {
 	console.log(newQueue.toString());
 	console.log(newQueue.dataArr);
 	*/
+	
+	/*
 	var buffer = new CircularBuffer(7);
 	buffer.write(0);
 	buffer.write('a');
@@ -57,7 +59,6 @@ function startTest() {
 	buffer.write(null);
 	var newObj = {};
 	buffer.write(newObj);
-	/*
 	console.log("Is buffer full? " + buffer.isFull());
 	console.log("Is buffer empty?" + buffer.isEmpty());
 	var readVal = buffer.read();
@@ -78,7 +79,36 @@ function startTest() {
 	console.log("Is buffer empty?" + buffer.isEmpty());
 	*/
 
-
+	var stack = new Stack();
+	console.log(stack.toString());
+	stack.push(a);
+	stack.push(0);
+	console.log(stack.toString());
+	stack.push('a');
+	console.log(stack.toString());
+	stack.push(1);
+	console.log(stack.toString());
+	stack.push('b');
+	console.log(stack.toString());
+	stack.push(2);
+	console.log(stack.toString());
+	stack.push('c');
+	console.log(stack.toString());
+	console.log("Is empty? " + stack.isEmpty());
+	stack.pop(); //0
+	console.log(stack.toString());
+	stack.pop(); //a
+	console.log(stack.toString());
+	stack.pop(); //1
+	console.log(stack.toString());
+	stack.pop(); //b
+	console.log(stack.toString());
+	stack.pop(); //2
+	console.log(stack.toString());
+	stack.pop(); //c
+	console.log(stack.toString());
+	console.log("Is empty? " + stack.isEmpty());
+	
 	/*
 	var bst = new BinarySearchTree();
 	bst.addNode(10);
