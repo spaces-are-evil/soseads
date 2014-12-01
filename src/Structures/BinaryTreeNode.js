@@ -17,11 +17,11 @@ function BinaryTreeNode(data, parent, left, right, height) {
 		leftChild = left || null,
 		rightChild = right || null,
 		nodeHeight = height || null,
-		subtreeHeight,
-		balanceFactor;
+		subtreeHeight;
 	
 	/**
 	 * Readjusts the height value of children nodes when a change in structure takes place.
+	 * Uses level order traversal (breadth first search).
 	 */
 	this.changeChildrenHeight = function() {
 		var childQueue = new Queue(),
@@ -42,6 +42,7 @@ function BinaryTreeNode(data, parent, left, right, height) {
 	
 	/**
 	 * Counts the number of nodes from the node calling the function.
+	 * Uses level order traversal (breadth first search).
 	 */
 	this.countChildNodes = function() {
 		var nodeCount = 0,
@@ -84,19 +85,21 @@ function BinaryTreeNode(data, parent, left, right, height) {
 	this.hasParent = function() {
 		return (parent) ? true : false;
 	}
-
+	
 	/**
 	 * Checks if node has exactly 1 child.
 	 * @return true if node has either a left or right child.
 	    returns false if it has neither or both.
 	 */
 	this.hasChild = function() {
+		//XOR implementation
 		if ((leftChild && !rightChild) || (!leftChild && rightChild)) {
 			return true;
 		} else {
 			return false;
 		}
 	}
+	
 	/**
 	 * Checks if node has both children.
 	 * @return true if node has both children, false otherwise.
@@ -106,11 +109,27 @@ function BinaryTreeNode(data, parent, left, right, height) {
 	}
 		
 	/**
+	 * Checks if node has a left child.
+	 * @return true if node has a left child, false otherwise.
+	 */
+	this.hasLeftChild = function() {
+		return (leftChild) ? true : false;
+	}
+		
+	/**
+	 * Checks if node has a right child.
+	 * @return true if node has a right child, false otherwise.
+	 */
+	this.hasRightChild = function() {
+		return (rightChild) ? true : false;
+	}
+
+	/**
 	 * Get the height of the current node.
 	 * @return The height of the current node if found, -1 if node height not found.
 	 */
 	this.getHeight = function() {
-		return (nodeHeight || nodeHeight === 0) nodeHeight : -1;
+		return (nodeHeight || nodeHeight === 0) nodeHeight : false;
 	};
 				
 	/**
@@ -118,7 +137,7 @@ function BinaryTreeNode(data, parent, left, right, height) {
 	 * @return The data of the current node if found, -1 if node data not found.
 	 */
 	this.getNodeData = function() {
-		return (nodeData === 0 || nodeData) ? nodeData : -1;
+		return (nodeData === 0 || nodeData) ? nodeData : false;
 	};
 				
 	/**
@@ -126,7 +145,7 @@ function BinaryTreeNode(data, parent, left, right, height) {
 	 * @return The left child of the current node if found, -1 if left child not found.
 	 */
 	this.getLeftChild = function() {
-		return (leftChild) ? leftChild : -1;
+		return (leftChild) ? leftChild : false;
 	};
 
 	/**
@@ -134,7 +153,7 @@ function BinaryTreeNode(data, parent, left, right, height) {
 	 * @return The right child of the current node if found, -1 if right child not found.
 	 */
 	this.getLeftChild = function() {
-		return (rightChild) ? rightChild : -1;
+		return (rightChild) ? rightChild : false;
 	};
 				
 	/**
@@ -142,21 +161,7 @@ function BinaryTreeNode(data, parent, left, right, height) {
 	 * @return the parent of a current node if found, -1 if parent not found.
 	 */
 	this.getParent = function() {
-		return (parent) ? parent : -1;
-	};
-
-	/**
-	 * Gets the balance factor for the current node;
-	 * @return the balance factor of the current node.
-	 *
-	 */
-	this.getBalanceFactor = function() {
-		if (balanceFactor || balanceFactor === 0) {
-			return balanceFactor;
-		} 
-		else { 
-			throw new ReferenceError('BinaryTreeNode.getBalanceFactor(): balance factor not set for current node.');
-		}
+		return (parent) ? parent : false;
 	};
 
 	/**
@@ -224,33 +229,6 @@ function BinaryTreeNode(data, parent, left, right, height) {
 	};
 		
 	/**
-	 * Path retracing algorithm. Retraces path of node from child to parent
-	 * and calculates balance factor as it goes.
-	 */
-	this.setBalanceFactor = function() {
-		var node,
-			newBalanceFactor = 0;
-		try {
-			var node = this;
-		} catch (err) {};
-		
-		while (node.parent !== null) {
-			if (node.parent.leftChild && node.parent.leftChild.nodeData === node.nodeData) {
-				node.parent.balanceFactor = parseInt(balanceFactor.replace("-","").trim()) + 1;
-			}
-			if (node.parent.rightChild && node.parent.rightChild.nodeData === node.nodeData) {
-				node.parent.balanceFactor = parseInt("-" + (parseInt(balanceFactor.replace("-","").trim()) + 1));
-			}
-			try {
-				node = node.parent.parent;
-			} catch (err) {
-				break;
-			}
-			
-		}
-	};
-	
-	/**
 	 * Removes the left child and link for the current node.
 	 */
 	this.deleteLeftChild = function() {
@@ -295,7 +273,6 @@ function BinaryTreeNode(data, parent, left, right, height) {
 		nodeData = null;
 		nodeHeight = null;
 		subtreeHeight = null;
-		balanceFactor = null;
 	};
 	
 	/**
