@@ -13,7 +13,7 @@
  */
 function BinaryTreeNode(data, parent, left, right, height) {
 	var nodeData = data || null,
-	 	parent = parent || null,
+	 	nodeParent = parent || null,
 		leftChild = left || null,
 		rightChild = right || null,
 		nodeHeight = height || null,
@@ -34,7 +34,7 @@ function BinaryTreeNode(data, parent, left, right, height) {
 				childQueue.enqueue(curNode.leftChild);
 			} 
 			if (curNode.rightChild) {
-				curNode.rightChild.nodeHeight = curNode.nodeHeight + 1;c
+				curNode.rightChild.nodeHeight = curNode.nodeHeight + 1;
 				childQueue.enqueue(curNode.rightChild);
 			}
 		}
@@ -53,10 +53,10 @@ function BinaryTreeNode(data, parent, left, right, height) {
 			curNode = countQueue.dequeue();
 			nodeCount++;
 			if (curNode.leftChild) {
-				childQueue.enqueue(curNode.leftChild);
+				countQueue.enqueue(curNode.leftChild);
 			} 
 			if (curNode.rightChild) {
-				childQueue.enqueue(curNode.rightChild);
+				countQueue.enqueue(curNode.rightChild);
 			}	
 		}
 		return nodeCount;
@@ -67,7 +67,7 @@ function BinaryTreeNode(data, parent, left, right, height) {
 	* @return True if parent is null (root condition), false otherwise.
 	*/
 	this.isRoot = function() {
-		return (parent === null) ? true : false;
+		return (this.nodeParent === null) ? true : false;
 	};
 		
 	/**
@@ -75,7 +75,7 @@ function BinaryTreeNode(data, parent, left, right, height) {
 	* @return True if no children exist (leaf condition), false otherwise.
 	*/
 	this.isLeaf = function() {
-		return (leftChild && rightChild) ? true : false;
+		return (!leftChild && !rightChild) ? true : false;
 	};
 			
 	/**
@@ -83,8 +83,8 @@ function BinaryTreeNode(data, parent, left, right, height) {
 	 * @return true if node has parent, false otherwise.
 	 */
 	this.hasParent = function() {
-		return (parent) ? true : false;
-	}
+		return (this.nodeParent) ? true : false;
+	};
 	
 	/**
 	 * Checks if node has exactly 1 child.
@@ -93,12 +93,8 @@ function BinaryTreeNode(data, parent, left, right, height) {
 	 */
 	this.hasChild = function() {
 		//XOR implementation
-		if ((leftChild && !rightChild) || (!leftChild && rightChild)) {
-			return true;
-		} else {
-			return false;
-		}
-	}
+		return ((leftChild && !rightChild) || (!leftChild && rightChild)) ? true : false;
+	};
 	
 	/**
 	 * Checks if node has both children.
@@ -106,7 +102,7 @@ function BinaryTreeNode(data, parent, left, right, height) {
 	 */
 	this.hasChildren = function() {
 		return (leftChild && rightChild) ? true : false;
-	}
+	};
 		
 	/**
 	 * Checks if node has a left child.
@@ -114,7 +110,7 @@ function BinaryTreeNode(data, parent, left, right, height) {
 	 */
 	this.hasLeftChild = function() {
 		return (leftChild) ? true : false;
-	}
+	};
 		
 	/**
 	 * Checks if node has a right child.
@@ -122,14 +118,14 @@ function BinaryTreeNode(data, parent, left, right, height) {
 	 */
 	this.hasRightChild = function() {
 		return (rightChild) ? true : false;
-	}
+	};
 
 	/**
 	 * Get the height of the current node.
 	 * @return The height of the current node if found, -1 if node height not found.
 	 */
 	this.getHeight = function() {
-		return (nodeHeight || nodeHeight === 0) nodeHeight : false;
+		return (nodeHeight || nodeHeight === 0) ? nodeHeight : false;
 	};
 				
 	/**
@@ -152,7 +148,7 @@ function BinaryTreeNode(data, parent, left, right, height) {
 	 * Gets the right child  of the current node.
 	 * @return The right child of the current node if found, -1 if right child not found.
 	 */
-	this.getLeftChild = function() {
+	this.getRightChild = function() {
 		return (rightChild) ? rightChild : false;
 	};
 				
@@ -161,7 +157,7 @@ function BinaryTreeNode(data, parent, left, right, height) {
 	 * @return the parent of a current node if found, -1 if parent not found.
 	 */
 	this.getParent = function() {
-		return (parent) ? parent : false;
+		return (nodeParent) ? nodeParent : false;
 	};
 
 	/**
@@ -182,8 +178,8 @@ function BinaryTreeNode(data, parent, left, right, height) {
 	 * @param object The data to set for the current node.
 	 */
 	this.setNodeData = function(data) {
-		var regExp = "[0-9a-zA-Z]+";
-		if (regExp.test(data)) {
+		var patt = new RegExp("[0-9a-zA-Z]+");
+		if (patt.test(data)) {
 			nodeData = data;
 		}
 		else {
@@ -201,7 +197,7 @@ function BinaryTreeNode(data, parent, left, right, height) {
 	 	} else {
 	 		throw new ReferenceError("BinaryTreeNode.setLeftChild(node): node must be of type BinaryTreeNode.");
 	 	}
-	 }
+	 };
 
 	/**
 	 * Sets the right child of the current node.
@@ -213,15 +209,15 @@ function BinaryTreeNode(data, parent, left, right, height) {
 	 	} else {
 	 		throw new ReferenceError("BinaryTreeNode.setRightChild(node): node must be of type BinaryTreeNode.");
 	 	}
-	 }
+	 };
 				
 	/**
-	 * Sets the parent of the current node.
+	 * Sets the parent of the current node.ss
 	 * @param node the node to set the parent as.
 	 */
 	this.setParent = function(node) {
 		if (node instanceof BinaryTreeNode) {
-			parent = node;
+			nodeParent = node;
 		}
 		else { 
 			throw new ReferenceError('BinaryTreeNode.setParent(node): node must be of type BinaryTreeNode');
@@ -256,8 +252,8 @@ function BinaryTreeNode(data, parent, left, right, height) {
 	 * Removes the parent link for the current node.
 	 */
 	this.deleteParent = function() {
-		if (parent) {	
-			parent = null;
+		if (nodeParent) {	
+			nodeParent = null;
 		} else {
 			throw new RangeError("BinaryTreeNode.deleteRightChild(): Cannot delete a non-existent parent.");
 		}
@@ -267,7 +263,7 @@ function BinaryTreeNode(data, parent, left, right, height) {
 	 * Removes the current node.
 	 */
 	this.deleteNode = function() {
-		parent = null;
+		nodeParent = null;
 		leftChild = null;
 		rightChild = null;
 		nodeData = null;

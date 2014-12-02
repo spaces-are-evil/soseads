@@ -63,41 +63,31 @@ function BinarySearchTree() {
 	this.preOrderSearch = function(node, data, add) {
 		var nodeData,
 			newNode;
-		//ensuring value of add is retained.
 		add = add || false;
-		
-		//failsafe if bad node is passed in, halts execution
 		if (isVarObjEmpty(node)) {
 			throw new ReferenceError();
 		} else {
 			nodeData = node.getNodeData();
 		}
-		//found node value and not adding, return node.
 		if (data === nodeData && !add) {
 			return node;
-		//found node value and adding (already exists), return false
 		} else if (data === nodeData && add) {
 			return false;
-		//no match found, continue regardless.
 		} else if (data !== nodeData) {
 			if (data < nodeData) {
 				if (node.getLeftChild()) {
-					return preOrderValueSearch(node.getLeftChild(), data, add);
-				//no left child but we are adding new node, this is the place to add.
+					return this.preOrderSearch(node.getLeftChild(), data, add);
 				} else if (!node.getLeftChild() && add) {
 					return {addNode: node, leftOrRight: "left"};
 				}
 			} else if (data > nodeData) {
 				if (node.getRightChild()) {
-					return preOrderValueSearch(node.getRightChild(), data, add);
-				//no right child but we are adding new node, this is the place to add.
+					return this.preOrderSearch(node.getRightChild(), data, add);
 				} else if (!node.getRightChild() && add) {
 					return {addNode: node, leftOrRight: "right"};
 				}
 			}	
 		}
-		//the only reason code would reach this far is all nodes have been touched 
-		//and no value was found. Return -1 for node not found.
 		return -1;	
 	};	
 
@@ -110,28 +100,19 @@ function BinarySearchTree() {
 		var nextNode = node.getLeftChild(),
 			maxNode = nextNode,
 			maxFound = false;
-			
-		
 		while (!maxFound) {
-			
-			//go to next largest node, store value if greater than whats currently stored in maxNodeValue.
 			if (nextNode.hasRightChild()) {
 				nextNode = nextNode.getRightChild();
-				maxNode = (nextNode.getNodeData() > maxNode.getNodeData) ? nextNode : maxNode;
+				maxNode = (nextNode.getNodeData() > maxNode.getNodeData()) ? nextNode : maxNode;
 			} 
-			//go to next smallest node, don't store value.
 			else if (nextNode.hasLeftChild()) {
 				nextNode = nextNode.getLeftChild();
 			}
-			
-			//no child found, max value reached.
 			else {
 				maxFound = true;
 			}
 		}
-
 		return maxNode;
-		
 	};
 
 	/**
@@ -142,32 +123,31 @@ function BinarySearchTree() {
 	this.addNode = function(data) {
 		var whichChild,
 			whichNode,
+			foundNode,
 			addNode,
-		    regExp = "[0-9a-zA-Z]+";
-		if (!regExp.test(data)) {
+		    patt = new RegExp("[0-9a-zA-Z]+");
+		if (!patt.test(data)) {
 			throw new ReferenceError("BinarySearchTree.addNode(data): data must be alphanumerical character(s).");
 		}
-		//root does not exist, adding root
 		if (!root) {
 			root = new BinaryTreeNode(data);
 			root.setHeight(0);
-		} else {
-			newNode = preOrderSearch(root, data, true);
-			//if preOrderSearch found a new node, newNode will be truthy. 
-			//if preOrderSearch found data already existing, newNode would be falsy.
-			if (newNode) {
-				whichNode = newNode.addNode;
-				//increase height of tree if node has no left or right children.
+		} else { 
+			foundNode = this.preOrderSearch(root, data, true);
+			if (foundNode) {
+				whichNode = foundNode.addNode;
+				whichChild = foundNode.leftOrRight;
 				if (!whichNode.getLeftChild() && !whichNode.getRightChild()) {
 					treeHeight++;
 				}
-				whichChild = newNode.leftOrRight;
 				addNode = new BinaryTreeNode(data, whichNode, null, null, whichNode.getHeight() + 1);
 				if (whichChild === "left") {
 					whichNode.setLeftChild(addNode);
 				} else if (whichChild === "right") {
 					whichNode.setRightChild(addNode);
 				}
+			} else {
+				console.log("Node with given data already exists");
 			}
 		}
 	};
@@ -182,62 +162,118 @@ function BinarySearchTree() {
 	 * @param data the value to delete from the subtree.
 	 */
 	this.deleteNode = function(data) {
-		var deleteNode = preOrderSearch(root, data, false),
-			deleteNodeParent = deleteNode.getParent(),
-			replaceNode,
-			replaceNodeParent,
-			replaceNodeChild,
-			regExp = "[0-9a-zA-Z]+";
-		
-		if (!regExp.test(data)) {
+		var node = this.preOrderSearch(root, data, false),
+			nodeParent,
+			nodeChild,
+			newNode,
+			newNodeParent,
+			newNodeChild,
+			patt = new RegExp("[0-9a-zA-Z]+");
+		if (!patt.test(data)) {
 			throw new ReferenceError("BinarySearchTree.addNode(data): data must be alphanumerical character(s).");
 		}
-		if (deleteNode === -1) {
+		if (node === -1) {
 			throw new ReferenceError("BinarySearchTree.deleteNode(data): node with given data did not exist in binary search tree.");
-		} 
-		if (deleteNode.hasChild() || deleteNode.hasChildren()) {}
+		}
+
+		//check if deleteNode has a parent, if no parent exists we are deleting root
+		if (node.hasParent()) {
+			nodeParent = node.getParent();
+		} else {
+			nodeParent = false;
+		}
+
+		//deleteNode with no children
+		if (!node.hasChild() && !node.hasChildren()) {
+
+		}
+
+		//deleteNode has 1 child
+		if (node.hasChild()) {
+			if (node.hasLeftChild()) {
+				nodeChild = node.getLeftChild();
+			} else if (node.hasRightChild()) {
+				nodeChild = node.getRightChild();
+			}
+			if (nodeParent) {
+				if (nodeParent.hasLeftChild()) {
+					nodeParent.setLeftChild(nodeChild);
+				} else if (nodeParent.hasRightChild()) {
+					nodeParent.setRightChild(nodeChild);
+				}
+			}
+		}
+
+		node.deleteNode();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		/*
+		deleteNodeParent = deleteNode.getParent();
+		if (deleteNode.hasChild() || deleteNode.hasChildren()) {
 			//deleteNode has 1 child
 			if (deleteNode.hasChild()) {
 				replaceNode = deleteNode.getLeftChild() || deleteNode.getRightChild();
+				console.log(replaceNode.toString());
 			}
 			//deleteNode has 2 children
 			else if (deleteNode.hasChildren()) {
 				//find the maximum value node within the left subtree of deleteNode.
-				replaceNode = findMaxNode(deleteNode);
-
+				replaceNode = this.findMaxNode(deleteNode);
+				console.log(replaceNode.toString());
 				//get info of replaceNode for linking replaceNode's parent to replaceNode's child.
 				//replaceNode can have at most 1 left child. A right child would indicate that repalceNode is not the max.
 				replaceNodeChild = replaceNode.getLeftChild() || replaceNode.getRightChild();
 				replaceNodeParent = replaceNode.getParent();
-				
-				//set replaceNode's parent's children to replaceNode's child.
-				if (replaceNodeParent.getLeftChild() === replaceNode) {
-					replaceNodeParent.setLeftChild(replaceNodeChild);
+				console.log(replaceNodeChild.toString());
+				console.log(replaceNodeParent.toString());
+				//set replaceNode's parent's children to replaceNode's child if replaceNode has child.
+				if (replaceNodeChild) {
+					if (replaceNodeParent.getLeftChild() === replaceNode) {
+						replaceNodeParent.setLeftChild(replaceNodeChild);
+					}
+					else if (replaceNodeParent.getRightChild() === replaceNode) {
+						replaceNodeParent.setRightChild(replaceNodeChild);
+					}					
 				}
-				else if (replaceNodeParent.getRightChild() === replaceNode) {
-					replaceNodeParent.setRightChild(replaceNodeChild);
-				}
-
 			}
 
 			//set parent of replaceNode only if it exists. If no parent, we are deleting root.
 			if (deleteNodeParent) {
 				replaceNode.setParent(deleteNodeParent);
-
+			} else {
+				root = replaceNode;
 			}
 
 			//set children of replaceNode to the children of deleteNode if they exist.
 			if (deleteNode.getLeftChild()) {
-				replaceNode.setLeftChild(deleteNode.getLeftChild());
+				var leftChild = deleteNode.getLeftChild();
+				console.log(leftChild.toString());
+				replaceNode.setLeftChild(leftChild);
 			}
 			if (deleteNode.getRightChild()) {
-				replaceNode.setRightChild(deleteNode.getRightChild());
+				var rightChild = deleteNode.getRightChild();
+				console.log(rightChild.toString());
+				replaceNode.setRightChild(rightChild);
 			}
 		}
 
 		//Clears node data. Also handles the case of a leaf node as conditions fail for previous if statements.
 		deleteNode.deleteNode();
-
+	*/
 	};
 
 	/**
@@ -262,24 +298,22 @@ function BinarySearchTree() {
 		printQueue.enqueue(root);
 		while (!printQueue.isEmpty()) {
 			printNode = printQueue.dequeue();
-			if (printNode) {
+			if (printNode !== "<>") {
 				printStr.push(printNode.getNodeData() + "|" + printNode.getHeight());
 				if (printNode.getLeftChild()) {
 					printQueue.enqueue(printNode.getLeftChild());
 				} else {
-					printNode.enqueue("");
+					printQueue.enqueue("<>");
 				}
 				if (printNode.getRightChild()) {
 					printQueue.enqueue(printNode.getRightChild());
 				} else {
-					printNode.enqueue("");
+					printQueue.enqueue("<>");
 				}
 			} else {
-				printStr.push(tempNode);
+				printStr.push(printNode);
 			}
-			console.log("QUEUE: " + printQueue.toString());
-			
 		}
-		console.log("TREE ARRAY: " + printStr.toString());
+		return printStr.toString();
 	};
 }

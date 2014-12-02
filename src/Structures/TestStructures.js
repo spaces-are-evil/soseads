@@ -79,6 +79,7 @@ function startTest() {
 	console.log("Is buffer empty?" + buffer.isEmpty());
 	*/
 
+	/*
 	var stack = new Stack();
 	console.log(stack.toString());
 	stack.push(a);
@@ -108,8 +109,8 @@ function startTest() {
 	stack.pop(); //c
 	console.log(stack.toString());
 	console.log("Is empty? " + stack.isEmpty());
+	*/
 	
-	/*
 	var bst = new BinarySearchTree();
 	bst.addNode(10);
 	bst.addNode(7);
@@ -121,13 +122,12 @@ function startTest() {
 	bst.addNode(11);
 	bst.addNode(17);
 	
-	var printTree = new TreeTraverse();
-	printTree.preOrderTraversal(bst);
+	console.log(bst.toString());
 	
-	bst.deleteNode(10);
-	printTree.preOrderTraversal(bst);
 	bst.deleteNode(1);
-	printTree.preOrderTraversal(bst);
+	console.log(bst.toString());
+	bst.deleteNode(10);
+	console.log(bst.toString());
 	
 	var bst2 = new BinarySearchTree();
 	bst2.addNode(1);
@@ -139,8 +139,8 @@ function startTest() {
 	bst2.addNode(7);
 	bst2.addNode(8);
 	bst2.addNode(9);
-	printTree.preOrderTraversal(bst2);
+	console.log(bst2.toString());
 	console.log("Is Degenerate? " + bst2.isDegenerate());
-	*/
+	
 	
 }
