@@ -10,12 +10,15 @@
  * 		- Objects with parameters are not empty as long as one parameter is set.
  * @param obj The variable or object to examine.
  * @return True if the variable or object is empty, false otherwise.
- */ 
+ */
  /* istanbul ignore next */
 function isVarObjEmpty(obj) {
 	var propCount = 0,
 		validPropCount = 0;
-	if (!obj && obj !== 0) {
+	if (obj || obj === 0) {
+		return false;
+	}
+	else if (!obj && obj !== 0) {
 		return true;
 	} else {
 		for (var i in obj) {
@@ -27,6 +30,7 @@ function isVarObjEmpty(obj) {
 	}
 	return (typeof obj === 'object' && propCount >= 0 && validPropCount === 0) ? true : false;
 }
+
 /**
  * Deque (Double Endeded Queue) Data Structure. Pronounced deck.
  * Backed by an array and uses array functions to perform deque functions.

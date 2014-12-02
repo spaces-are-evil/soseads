@@ -15,7 +15,10 @@
 function isVarObjEmpty(obj) {
 	var propCount = 0,
 		validPropCount = 0;
-	if (!obj && obj !== 0) {
+	if (obj || obj === 0) {
+		return false;
+	}
+	else if (!obj && obj !== 0) {
 		return true;
 	} else {
 		for (var i in obj) {
@@ -41,7 +44,7 @@ function BinarySearchTree() {
 	 * NOTICE: Optional parameters cannot be skipped.
 	 * If you want to pass height, all other parameters must be filled.
 	 * @param data Data the node will house. Null if not set
-	 * @param left The node's left child. Null if not set
+	 * @param left The ngit ode's left child. Null if not set
 	 * @param right The node's right child. Null if not set
 	 * @param parent The node's parent. Null if not set
 	 * @param height The node's height. Null if not set

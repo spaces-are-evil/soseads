@@ -15,7 +15,10 @@
 function isVarObjEmpty(obj) {
 	var propCount = 0,
 		validPropCount = 0;
-	if (!obj && obj !== 0) {
+	if (obj || obj === 0) {
+		return false;
+	}
+	else if (!obj && obj !== 0) {
 		return true;
 	} else {
 		for (var i in obj) {
@@ -25,11 +28,7 @@ function isVarObjEmpty(obj) {
 			}
 		}
 	}
-	if (typeof obj === 'object' && propCount >= 0 && validPropCount === 0) {
-		return true;
-	} else {
-		return false;
-	}
+	return (typeof obj === 'object' && propCount >= 0 && validPropCount === 0) ? true : false;
 }
 
 /**
