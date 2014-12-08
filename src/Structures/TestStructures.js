@@ -1,9 +1,9 @@
 function startTest() {
-	/*
+	///*
 	var testQueue = new Queue();
 	testQueue.enqueue(0);
 	console.log(testQueue.toString());
-	testQueue.enqueue(2);
+	testQueue.enqueue();
 	console.log(testQueue.toString());
 	testQueue.enqueue(3);
 	console.log(testQueue.toString());
@@ -30,7 +30,7 @@ function startTest() {
 	console.log(testQueue.toString());
 	console.log(newQueue.toString());
 	console.log(newQueue.dataArr);
-	*/
+	//*/
 	
 	/*
 	var buffer = new CircularBuffer(7);
@@ -110,7 +110,7 @@ function startTest() {
 	console.log(stack.toString());
 	console.log("Is empty? " + stack.isEmpty());
 	*/
-	
+	/*
 	var bst = new BinarySearchTree();
 	bst.addNode(10);
 	bst.addNode(7);
@@ -141,6 +141,6 @@ function startTest() {
 	bst2.addNode(9);
 	console.log(bst2.toString());
 	console.log("Is Degenerate? " + bst2.isDegenerate());
-	
+	*/
 	
 }

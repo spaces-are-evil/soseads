@@ -15,9 +15,13 @@
 function isVarObjEmpty(obj) {
 	var propCount = 0,
 		validPropCount = 0;
-	if (!obj && obj !== 0) {
+	if (obj === 0) {
+		return false;
+	}
+	else if (!obj && obj !== 0) {
 		return true;
-	} else {
+	} 
+	else {
 		for (var i in obj) {
 			propCount++;
 			if (obj.hasOwnProperty(i) && (obj[i] || obj[i] === 0)) {
@@ -37,120 +41,183 @@ function ArrayList() {
 	dataArr = [];
 
 	/**
-	 * Adds an element to the end of the array list.
-	 * @param object the element to add.
+	 * Adds an object to the end of the array list.
+	 * @param object the object to add.
 	 */
-	this.add = function(object) {
-		
-		dataArr.push(object);
+	this.add = function(obj) {
+		if (isVarObjEmpty(obj)) {
+			throw new ReferenceError("ArrayList.add(obj): objects cannot be null, undefined or uninstantiated. Objects must have 1 valid property");
+		} 
+		else {
+			dataArr.push(object);	
+		}
 	};
 
 	/**
-	 * Adds an element at a specified index in the array list.
-	 * If element exists at index, shifts that element and all others
+	 * Adds an object at a specified index in the array list.
+	 * If object exists at index, shifts that object and all others
 	 * to the right.
-	 */
-	this.addAt = function(index, object) {
-		dataArr.splice(index, 0, object);
-
-		dataArr[index] = object;
+	 * @param i the index to add at
+	 * @param obj the object to add
+	 */ 
+	this.addAt = function(i, obj) {
+		if (!isNaN(i) || i < 0) {
+			throw new RangeError("ArrayList.get(i): i must be a positive integer value (0 inclusive)");
+		}
+		if (isVarObjEmpty(obj)) {
+			throw new ReferenceError("ArrayList.add(obj): objects cannot be null, undefined or uninstantiated. Objects must have 1 valid property");
+		} 
+		else {
+			dataArr.splice(i, 0, obj);	
+		}
 	};
 
 	/**
-	 *
-	 *
+	 * Adds an array of objects to the end of the array list.
+	 * @param objArr array of objects to add.
 	 */
-	this.addAll = function(objectList) {
-		this.dataArr.concat(objectList);
+	this.addAll = function(objArr) {
+		if (objArr.constructor !== Array) {
+			throw new ReferenceError("ArrayList.addAll(objArr): objArr must be an array.");
+		}
+		else {
+			this.dataArr.concat(objArr);
+		}
 	};
 
 	/**
-	 *
-	 *
+	 * Adds an array of objects to the array list at a specified index.
+	 * Any existing object at index i is moved right, along with subsequent objects.
+	 * @param i index to add objects at. 
+	 * @param objArr array of objects to add.
 	 */
-	this.addAllAt = function(index, objectList) {
-		this.dataArr.splice(index, 0, objectList);
+	this.addAllAt = function(i, objArr) {
+		if (!isNaN(i) || i < 0) {
+			throw new RangeError("ArrayList.addAllAt(i, objArr): i must be a positive integer value (0 inclusive)");
+		} 
+		else if (objArr.constructor = Array) {
+			throw new ReferenceError("ArrayList.addAllAt(i, objArr): objArr must be an array.");
+		}
+		else {
+			this.dataArr.splice(i, 0, objectList);	
+		}
 	};
 
 	/**
-	 *
-	 *
+	 * Clears the array list of all objects.
 	 */
 	this.clear = function() {
 		this.dataArr = [];
 	};
 
 	/**
-	 *
-	 *
+	 * Checks if an object exists in the array list.
+	 * @param obj The object to search for.
+	 * @return True if ArrayList contains object, false otherwise.
 	 */
-	this.contains = function(object) {
-		if (this.dataArr.indexOf(object) !== -1) return true;
-		return false;
-	};
-
-	/**
-	 *
-	 *
-	 */
-	this.get = function(index) {
-		return this.dataArr[index];
-	};
-
-	/**
-	 *
-	 *
-	 */
-	this.indexOf = function(object) {
-		return this.dataArr.indexOf(object);
-	};
-
-	/**
-	 *
-	 *
-	 */
-	this.lastIndexOf = function(object) {
-		return this.dataArr.lastIndexOf(object);
-	};
-
-	/**
-	 *
-	 *
-	 */
-	this.removeAt = function(index) {
-		this.dataArr.splice(index,1);
-	};
-
-	/**
-	 *
-	 *
-	 */
-	this.remove = function(object) {
-		var index = this.dataArr.indexOf(object);
-		if (index !== -1) {
-			this.dataArr.splice(index, 1);
+	this.contains = function(obj) {
+		if (isVarObjEmpty(obj)) {
+			throw new ReferenceError("ArrayList.contains(obj): objects cannot be null, undefined or uninstantiated. Objects must have 1 valid property");
+		} 
+		else {
+			return (this.dataArr.indexOf(obj) !== -1) ? true : false;
 		}
 	};
 
 	/**
-	 *
-	 *
+	 * Returns an object in the array list at the specified index.
+	 * @param i index of object to get.
+	 * @return the object at the given index.
 	 */
-	this.set = function(index, object) {
-		this.dataArr[index] = object;
+	this.get = function(i) {
+		if (!isNaN(i) || i < 0) {
+			throw new RangeError("ArrayList.get(i): i must be a positive integer value (0 inclusive)");
+		} 
+		else if ( i > dataArr.length) {
+			throw new RangeError("ArrayList.get(i): index out of bounds: i=" + i + " is greater than ArrayList.length=" + dataArr.length);
+		} 
+		else {
+			return this.dataArr[index];
+		}
 	};
 
 	/**
+	 * Returns the first found index of an object in the array.
+	 * Returns -1 if no object is found.
+	 * @param obj The object to find the index for.
+	 * @return the first index of the given object.
+	 */
+	this.indexOf = function(obj) {
+		if (isVarObjEmpty(obj)) {
+			throw new ReferenceError("ArrayList.indexOf(obj): objects cannot be null, undefined or uninstantiated. Objects must have 1 valid property");
+		}
+		return this.dataArr.indexOf(obj);
+	};
+
+	/**
+	 * Returns the last found index of an object in the array.
+	 * Returns -1 if no object is found.
 	 *
+	 */
+	this.lastIndexOf = function(obj) {
+		if (isVarObjEmpty(obj)) {
+			throw new ReferenceError("ArrayList.lastIndexOf(obj): objects cannot be null, undefined or uninstantiated. Objects must have 1 valid property");
+		}
+		return this.dataArr.lastIndexOf(obj);
+	};
+
+	/**
+	 * Removes an object at a given index.
+	 * @param i the index of the object to remove.
+	 */
+	this.removeAt = function(i) {
+		if (!isNaN(i) || i < 0) {
+			throw new RangeError("ArrayList.get(i): i must be a positive integer value (0 inclusive)");
+		} 
+		else if () {
+
+		}
+		else {
+			this.dataArr.splice(i,1);	
+		}
+	};
+
+	/**
+	 * Removes an object from the arraylist if the object exists in the arraylist.
+	 * @param obj The object to remove from the arraylist.
+	 */
+	this.remove = function(obj) {
+		if (isVarObjEmpty(obj)) {
+			throw new ReferenceError("ArrayList.remove(obj): objects cannot be null, undefined or uninstantiated. Objects must have 1 valid property");
+		} else {
+			var index = this.dataArr.indexOf(obj);
+			if (index === -1) {
+				throw new ReferenceError("ArrayList.remove(obj): object does not exist in arraylist.");
+			} else {
+				this.dataArr.splice(index, 1);
+			}
+		}
+	};
+
+	/**
+	 * 
 	 *
+	 */
+	this.set = function(i, obj) {
+		this.dataArr[i] = obj;
+	};
+
+	/**
+	 * Returns the number of items in the ArrayList.
+	 * @return the number of items in the ArrayList.
 	 */
 	this.size = function() {
 		return this.dataArr.length;
 	};
 
 	/**
-	 *
-	 *
+	 * Returns an array representation of the ArrayList.
+	 * @return an array representation of the ArrayList.
 	 */
 	this.toArray = function() {
 		return this.dataArr;

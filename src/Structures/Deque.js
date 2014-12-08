@@ -15,7 +15,7 @@
 function isVarObjEmpty(obj) {
 	var propCount = 0,
 		validPropCount = 0;
-	if (obj || obj === 0) {
+	if (obj === 0) {
 		return false;
 	}
 	else if (!obj && obj !== 0) {
@@ -66,7 +66,7 @@ function isVarObjEmpty(obj) {
  	 * @param object the element to add to the end of the deque.
  	 */
  	this.push = function(object) {
- 		if (!isVarObjEmpty(object) && (object || object === 0)) {
+ 		if (!isVarObjEmpty(object)) {
  			dataArr.push(object);
  		} else {
  			throw new ReferenceError("Deque.push(object): object must be a valid variable or object. Objects must have at least 1 parameter that is initialized and not null.");
@@ -80,7 +80,7 @@ function isVarObjEmpty(obj) {
  	 * @param object the element to add to the beginning of the deque.
  	 */
  	this.unshift = function(object) {
- 		 if (!isVarObjEmpty(object) && (object || object === 0)) {
+ 		 if (!isVarObjEmpty(object)) {
  			dataArr.unshift(object);
  		} else {
  			throw new ReferenceError("Deque.unshift(object): object must be a valid variable or object. Objects must have at least 1 parameter that is initialized and not null.");

@@ -15,7 +15,7 @@
 function isVarObjEmpty(obj) {
 	var propCount = 0,
 		validPropCount = 0;
-	if (obj || obj === 0) {
+	if (obj === 0) {
 		return false;
 	}
 	else if (!obj && obj !== 0) {
@@ -73,7 +73,7 @@ function Queue() {
 	 * @return true if the add was successful, false otherwise.
 	 */
 	this.enqueue = function(object) {
-		if(!isVarObjEmpty(object) && (object || object === 0)) {
+		if(!isVarObjEmpty(object)) {
 			dataArr.push(object);
 		}
 		else {
@@ -169,7 +169,7 @@ function Queue() {
  	 * @param object the element to add to the end of the deque.
  	 */
  	this.push = function(object) {
- 		if (!isVarObjEmpty(object) && (object || object === 0)) {
+ 		if (!isVarObjEmpty(object)) {
  			dataArr.push(object);
  		} else {
  			throw new ReferenceError("Deque.push(object): object must be a valid variable or object. 
@@ -184,7 +184,7 @@ function Queue() {
  	 * @param object the element to add to the beginning of the deque.
  	 */
  	this.unshift = function(object) {
- 		 if (!isVarObjEmpty(object) && (object || object === 0)) {
+ 		 if (!isVarObjEmpty(object)) {
  			dataArr.unshift(object);
  		} else {
  			throw new ReferenceError("Deque.unshift(object): object must be a valid variable or object. 
@@ -475,7 +475,7 @@ function Stack() {
 	 * @param object the object to add.
 	 */
 	this.push = function(object) {
-		if (!isVarObjEmpty(object) && (object || object === 0)) {
+		if (!isVarObjEmpty(object)) {
 			dataArr.push(object);
 		} else {
 			throw new ReferenceError("Stack.push(): cannot push an uninitialized object onto the stack");

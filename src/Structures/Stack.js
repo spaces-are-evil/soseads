@@ -15,7 +15,7 @@
 function isVarObjEmpty(obj) {
 	var propCount = 0,
 		validPropCount = 0;
-	if (obj || obj === 0) {
+	if (obj === 0) {
 		return false;
 	}
 	else if (!obj && obj !== 0) {
@@ -100,7 +100,7 @@ function Stack() {
 	 * @param object the object to add.
 	 */
 	this.push = function(object) {
-		if (!isVarObjEmpty(object) && (object || object === 0)) {
+		if (!isVarObjEmpty(object)) {
 			dataArr.push(object);
 		} else {
 			throw new ReferenceError("Stack.push(): cannot push an uninitialized object onto the stack");

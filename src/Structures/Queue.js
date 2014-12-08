@@ -15,7 +15,7 @@
 function isVarObjEmpty(obj) {
 	var propCount = 0,
 		validPropCount = 0;
-	if (obj || obj === 0) {
+	if (obj === 0) {
 		return false;
 	}
 	else if (!obj && obj !== 0) {
@@ -74,7 +74,7 @@ function Queue() {
 	 * @return true if the add was successful, false otherwise.
 	 */
 	this.enqueue = function(object) {
-		if(!isVarObjEmpty(object) && (object || object === 0)) {
+		if(!isVarObjEmpty(object)) {
 			dataArr.push(object);
 		}
 		else {

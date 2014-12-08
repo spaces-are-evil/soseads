@@ -15,7 +15,7 @@
 function isVarObjEmpty(obj) {
 	var propCount = 0,
 		validPropCount = 0;
-	if (obj || obj === 0) {
+	if (obj === 0) {
 		return false;
 	}
 	else if (!obj && obj !== 0) {
