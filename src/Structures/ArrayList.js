@@ -73,37 +73,6 @@ function ArrayList() {
 	};
 
 	/**
-	 * Adds an array of objects to the end of the array list.
-	 * @param objArr array of objects to add.
-	 */
-	this.addAll = function(objArr) {
-		if (objArr.constructor !== Array) {
-			throw new ReferenceError("ArrayList.addAll(objArr): objArr must be an array.");
-		}
-		else {
-			this.dataArr.concat(objArr);
-		}
-	};
-
-	/**
-	 * Adds an array of objects to the array list at a specified index.
-	 * Any existing object at index i is moved right, along with subsequent objects.
-	 * @param i index to add objects at. 
-	 * @param objArr array of objects to add.
-	 */
-	this.addAllAt = function(i, objArr) {
-		if (!isNaN(i) || i < 0) {
-			throw new RangeError("ArrayList.addAllAt(i, objArr): i must be a positive integer value (0 inclusive)");
-		} 
-		else if (objArr.constructor = Array) {
-			throw new ReferenceError("ArrayList.addAllAt(i, objArr): objArr must be an array.");
-		}
-		else {
-			this.dataArr.splice(i, 0, objectList);	
-		}
-	};
-
-	/**
 	 * Clears the array list of all objects.
 	 */
 	this.clear = function() {
